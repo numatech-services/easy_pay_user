@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDE_6e3Jq5RHtSm1LWPM9h9pYtgwNEO-5Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>279646399697</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.campusniger.easypay</string>
+	<key>PROJECT_ID</key>
+	<string>easypayapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>easypayapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:279646399697:ios:ed3185d1730ead1dca29f0</string>
+</dict>
+</plist>

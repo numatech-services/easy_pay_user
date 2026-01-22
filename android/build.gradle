@@ -1,0 +1,58 @@
+buildscript {
+    ext.kotlin_version = '2.1.20'  //   1.9.23
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.6.0' //8.5.0 
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.15' // ou dernière version
+    }
+      configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+       afterEvaluate { project ->
+       if (project.hasProperty('android')) {
+           project.android {
+               if (namespace == null) {
+                   namespace project.group
+               }
+           }
+       }
+   }
+    project.evaluationDependsOn(':app')
+}
+
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+
+// AJOUTEZ CETTE SECTION À LA FIN DU FICHIER
+configurations.all {
+    resolutionStrategy {
+        // Versions COMPATIBLES avec AGP 8.5.0
+        force 'androidx.core:core-ktx:1.15.0'    // Compatible AGP 8.5.0
+        force 'androidx.core:core:1.15.0'        // Compatible AGP 8.5.0
+        force 'androidx.browser:browser:1.6.0'   // Compatible AGP 8.5.0
+        force 'androidx.activity:activity-ktx:1.7.2'  // Compatible
+        force 'androidx.activity:activity:1.7.2'      // Compatible
+    }
+}
