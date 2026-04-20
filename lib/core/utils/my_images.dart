@@ -1,5 +1,6 @@
 class MyImages {
-  static const String appLogo = "assets/images/logo/app_logo_white.png"; //Use png image
+  static const String appLogo =
+      "assets/images/logo/app_logo_white.png"; //Use png image
   static const String appColorLogo = "assets/images/logo/app_color_logo.png";
   static const String placeHolderImage = "assets/images/place_holder.png";
   static const String warningImage = "assets/img/warning.png";

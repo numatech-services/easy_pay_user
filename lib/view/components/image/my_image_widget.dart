@@ -31,6 +31,7 @@ class MyImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageUrl.toString(),
+     
       imageBuilder: (context, imageProvider) => Container(
         height: height,
         width: width,

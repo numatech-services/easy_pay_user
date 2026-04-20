@@ -24,6 +24,8 @@ class UrlContainer {
   static const String sendMoneyEndpoint = 'send/money';
   static const String sendMoneyHistoryEndpoint = 'send/money/history';
   static const String cashOutEndpoint = 'cash-out';
+   static const String cashOutCancelEndpoint = 'cash-out/cancel';
+
   static const String mobilerechargeEndpoint = 'mobile/recharge';
 
   static const String withdrawHistoryUrl = 'withdraw/history';

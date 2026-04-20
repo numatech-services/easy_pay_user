@@ -23,6 +23,7 @@ class MoneyRequestController extends GetxController {
   MoneyRequestController({required this.requestMoneyRepo});
 
   bool isLoading = false;
+  String type_payment = "";
 
   TextEditingController msgController = TextEditingController();
   TextEditingController numberController = TextEditingController();
@@ -110,14 +111,14 @@ class MoneyRequestController extends GetxController {
     update();
   }
 
-  double mainAmount = 0;
+  int mainAmount = 0;
   String charge = "";
   String totalCharge = "";
   String payableText = '';
    String? pass;
 
   void changeInfoWidget() {
-    mainAmount =  double.tryParse(amountController.text) ?? 0.0;
+    mainAmount = int.parse(amountController.text);
     update();
     // double rate = double.tryParse(sen?.currency?.rate ?? "0") ?? 0;
     double percent = double.tryParse(requestMoneyCharge?.percentCharge ?? "3") ?? 3;
@@ -207,6 +208,7 @@ class MoneyRequestController extends GetxController {
       username: selectedMethod == 1 ? selectedContact?.number.toString() ?? "" : numberController.text,
       msg: msgController.text,
       pin: pinController.text,
+      typeTicket: type_payment
     );
     if (responseModel.statusCode == 200) {
       SendMoneysubmitResponseModal modal = SendMoneysubmitResponseModal.fromJson(jsonDecode(responseModel.responseJson));

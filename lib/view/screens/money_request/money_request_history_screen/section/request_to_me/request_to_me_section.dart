@@ -81,7 +81,7 @@ class _RequestToMeSectionState extends State<RequestToMeSection> {
                             return RequestToMeCard(
                               index: index,
                               requestData: controller.requestToMeList[index],
-                              currencySym: controller.currency,
+                              currencySym: "tk",
                               press: () {},
                             );
                           },

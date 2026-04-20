@@ -81,6 +81,7 @@ class LatestCashOutHistory {
   String? charge;
   String? postBalance;
   String? trxType;
+   String? status;
   String? chargeType;
   String? trx;
   String? details;
@@ -100,6 +101,7 @@ class LatestCashOutHistory {
     this.receiverType,
     this.beforeCharge,
     this.amount,
+    this.status,
     this.charge,
     this.postBalance,
     this.trxType,
@@ -123,6 +125,7 @@ class LatestCashOutHistory {
         receiverType: json["receiver_type"].toString(),
         beforeCharge: json["before_charge"].toString(),
         amount: json["amount"].toString(),
+         status: json["status"].toString(),
         charge: json["charge"].toString(),
         postBalance: json["post_balance"].toString(),
         trxType: json["trx_type"].toString(),
@@ -146,6 +149,7 @@ class LatestCashOutHistory {
         "receiver_type": receiverType,
         "before_charge": beforeCharge,
         "amount": amount,
+         "status  ": status ,
         "charge": charge,
         "post_balance": postBalance,
         "trx_type": trxType,

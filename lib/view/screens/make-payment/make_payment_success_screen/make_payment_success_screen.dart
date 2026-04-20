@@ -63,7 +63,7 @@ class _MakePaymentSuccessScreenState extends State<MakePaymentSuccessScreen> {
             context,
             onTap: () {},
             title: MyStrings.payment_.toCapitalized().tr,
-            text: MyStrings.hasBeen.tr,
+            text: "Demande d'argent",
             cashDetails: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(

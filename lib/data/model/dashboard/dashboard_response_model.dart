@@ -12,9 +12,11 @@ import 'package:viserpay/data/model/global/user/user_model.dart';
 
 // import 'package:viserpay/data/model/global/meassage_model.dart';
 
-DashboardResponseModel dashboardResponseModelFromJson(String str) => DashboardResponseModel.fromJson(json.decode(str));
+DashboardResponseModel dashboardResponseModelFromJson(String str) =>
+    DashboardResponseModel.fromJson(json.decode(str));
 
-String dashboardResponseModelToJson(DashboardResponseModel data) => json.encode(data.toJson());
+String dashboardResponseModelToJson(DashboardResponseModel data) =>
+    json.encode(data.toJson());
 
 class DashboardResponseModel {
   String? remark;
@@ -29,10 +31,12 @@ class DashboardResponseModel {
     this.data,
   });
 
-  factory DashboardResponseModel.fromJson(Map<String, dynamic> json) => DashboardResponseModel(
+  factory DashboardResponseModel.fromJson(Map<String, dynamic> json) =>
+      DashboardResponseModel(
         remark: json["remark"],
         status: json["status"].toString(),
-        message: json["message"] == null ? null : Message.fromJson(json["message"]),
+        message:
+            json["message"] == null ? null : Message.fromJson(json["message"]),
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
       );
 
@@ -61,18 +65,38 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         user: json["user"] == null ? null : GlobalUser.fromJson(json["user"]),
-        allUtility: json["all_utility"] == null ? [] : List<AllUtility>.from(json["all_utility"]!.map((x) => AllUtility.fromJson(x))),
-        appBanners: json["app_banners"] == null ? [] : List<AppBanner>.from(json["app_banners"]!.map((x) => AppBanner.fromJson(x))),
-        merchants: json["merchants"] == null ? [] : List<Merchant>.from(json["merchants"]!.map((x) => Merchant.fromJson(x))),
-        latestTransactions: json["latest_transactions"] == null ? [] : List<LatestTransaction>.from(json["latest_transactions"]!.map((x) => LatestTransaction.fromJson(x))),
+        allUtility: json["all_utility"] == null
+            ? []
+            : List<AllUtility>.from(
+                json["all_utility"]!.map((x) => AllUtility.fromJson(x))),
+        appBanners: json["app_banners"] == null
+            ? []
+            : List<AppBanner>.from(
+                json["app_banners"]!.map((x) => AppBanner.fromJson(x))),
+        merchants: json["merchants"] == null
+            ? []
+            : List<Merchant>.from(
+                json["merchants"]!.map((x) => Merchant.fromJson(x))),
+        latestTransactions: json["latest_transactions"] == null
+            ? []
+            : List<LatestTransaction>.from(json["latest_transactions"]!
+                .map((x) => LatestTransaction.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "user": user?.toJson(),
-        "all_utility": allUtility == null ? [] : List<dynamic>.from(allUtility!.map((x) => x.toJson())),
-        "app_banners": appBanners == null ? [] : List<dynamic>.from(appBanners!.map((x) => x.toJson())),
-        "merchants": merchants == null ? [] : List<dynamic>.from(merchants!.map((x) => x.toJson())),
-        "latest_transactions": latestTransactions == null ? [] : List<dynamic>.from(latestTransactions!.map((x) => x.toJson())),
+        "all_utility": allUtility == null
+            ? []
+            : List<dynamic>.from(allUtility!.map((x) => x.toJson())),
+        "app_banners": appBanners == null
+            ? []
+            : List<dynamic>.from(appBanners!.map((x) => x.toJson())),
+        "merchants": merchants == null
+            ? []
+            : List<dynamic>.from(merchants!.map((x) => x.toJson())),
+        "latest_transactions": latestTransactions == null
+            ? []
+            : List<dynamic>.from(latestTransactions!.map((x) => x.toJson())),
       };
 }
 
@@ -137,7 +161,9 @@ class AppBanner {
   factory AppBanner.fromJson(Map<String, dynamic> json) => AppBanner(
         id: json["id"].toString(),
         dataKeys: json["data_keys"].toString(),
-        dataValues: json["data_values"] == null ? null : DataValues.fromJson(json["data_values"]),
+        dataValues: json["data_values"] == null
+            ? null
+            : DataValues.fromJson(json["data_values"]),
         getImage: json["get_image"],
       );
 
@@ -190,6 +216,7 @@ class LatestTransaction {
   String? charge;
   String? postBalance;
   String? trxType;
+  String? ticketNumber;
   String? chargeType;
   String? trx;
   String? details;
@@ -217,6 +244,7 @@ class LatestTransaction {
     this.charge,
     this.postBalance,
     this.trxType,
+    this.ticketNumber,
     this.chargeType,
     this.trx,
     this.details,
@@ -231,18 +259,26 @@ class LatestTransaction {
     this.relatedTransaction,
   });
 
-  factory LatestTransaction.fromJson(Map<String, dynamic> json) => LatestTransaction(
+  factory LatestTransaction.fromJson(Map<String, dynamic> json) =>
+      LatestTransaction(
         id: json["id"].toString(),
         setupDonationId: json["setup_donation_id"].toString(),
         userId: json["user_id"].toString(),
         userType: json["user_type"].toString(),
         receiverId: json["receiver_id"].toString(),
         receiverType: json["receiver_type"].toString(),
-        receiverUser: json["receiver_user"] == null ? null : GlobalUser.fromJson(json["receiver_user"]),
-        receiverAgent: json["receiver_agent"] == null ? null : GlobalAgent.fromJson(json["receiver_agent"]),
-        receiverMerchant: json["receiver_merchant"] == null ? null : GlobalAgent.fromJson(json["receiver_merchant"]),
+        receiverUser: json["receiver_user"] == null
+            ? null
+            : GlobalUser.fromJson(json["receiver_user"]),
+        receiverAgent: json["receiver_agent"] == null
+            ? null
+            : GlobalAgent.fromJson(json["receiver_agent"]),
+        receiverMerchant: json["receiver_merchant"] == null
+            ? null
+            : GlobalAgent.fromJson(json["receiver_merchant"]),
         beforeCharge: json["before_charge"].toString(),
         amount: json["amount"].toString(),
+        ticketNumber: json["nombre_ticket"].toString(),
         charge: json["charge"].toString(),
         postBalance: json["post_balance"].toString(),
         trxType: json["trx_type"].toString(),
@@ -255,9 +291,15 @@ class LatestTransaction {
         hideIdentity: json["hide_identity"].toString(),
         createdAt: json["created_at"] == null ? null : json["created_at"],
         updatedAt: json["updated_at"] == null ? null : json["updated_at"],
-        donationFor: json["donation_for"] == null ? null : DonationFor.fromJson(json["donation_for"]),
-        mobileRecharge: json["mobile_recharge"] == null ? null : jsonEncode(json["mobile_recharge"]),
-        relatedTransaction: json["related_transaction"] == null ? null : RelatedTransaction.fromJson(json["related_transaction"]),
+        donationFor: json["donation_for"] == null
+            ? null
+            : DonationFor.fromJson(json["donation_for"]),
+        mobileRecharge: json["mobile_recharge"] == null
+            ? null
+            : jsonEncode(json["mobile_recharge"]),
+        relatedTransaction: json["related_transaction"] == null
+            ? null
+            : RelatedTransaction.fromJson(json["related_transaction"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -272,6 +314,7 @@ class LatestTransaction {
         "charge": charge,
         "post_balance": postBalance,
         "trx_type": trxType,
+        "nombre_ticket": ticketNumber,
         "charge_type": chargeType,
         "trx": trx,
         "details": details,
@@ -348,7 +391,9 @@ class Merchant {
         refBy: json["ref_by"].toString(),
         balance: json["balance"].toString(),
         image: json["image"].toString(),
-        address: json["address"] == null ? null : MerchantAddress.fromJson(json["address"]),
+        address: json["address"] == null
+            ? null
+            : MerchantAddress.fromJson(json["address"]),
         status: json["status"].toString(),
         kv: json["kv"].toString(),
         ev: json["ev"].toString(),
@@ -405,7 +450,8 @@ class MerchantAddress {
     this.city,
   });
 
-  factory MerchantAddress.fromJson(Map<String, dynamic> json) => MerchantAddress(
+  factory MerchantAddress.fromJson(Map<String, dynamic> json) =>
+      MerchantAddress(
         address: json["address"],
         state: json["state"],
         zip: json["zip"].toString(),

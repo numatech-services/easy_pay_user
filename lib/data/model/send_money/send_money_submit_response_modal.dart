@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:viserpay/data/model/global/usercheck/user_check_response_modal.dart';
 import 'package:viserpay/data/model/global/meassage_model.dart';
 
-SendMoneysubmitResponseModal sendMoneysubmitResponseModalFromJson(String str) => SendMoneysubmitResponseModal.fromJson(json.decode(str));
+SendMoneysubmitResponseModal sendMoneysubmitResponseModalFromJson(String str) =>
+    SendMoneysubmitResponseModal.fromJson(json.decode(str));
 
-String sendMoneysubmitResponseModalToJson(SendMoneysubmitResponseModal data) => json.encode(data.toJson());
+String sendMoneysubmitResponseModalToJson(SendMoneysubmitResponseModal data) =>
+    json.encode(data.toJson());
 
 class SendMoneysubmitResponseModal {
   String? remark;
@@ -20,10 +22,12 @@ class SendMoneysubmitResponseModal {
     this.data,
   });
 
-  factory SendMoneysubmitResponseModal.fromJson(Map<String, dynamic> json) => SendMoneysubmitResponseModal(
+  factory SendMoneysubmitResponseModal.fromJson(Map<String, dynamic> json) =>
+      SendMoneysubmitResponseModal(
         remark: json["remark"],
         status: json["status"].toString(),
-        message: json["message"] == null ? null : Message.fromJson(json["message"]),
+        message:
+            json["message"] == null ? null : Message.fromJson(json["message"]),
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
       );
 
@@ -45,8 +49,11 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        actionID: json["action_id"] == null ? 'null' : json["action_id"].toString(),
-        sendMoney: json["send_money"] == null ? null : SendMoney.fromJson(json["send_money"]),
+        actionID:
+            json["action_id"] == null ? 'null' : json["action_id"].toString(),
+        sendMoney: json["send_money"] == null
+            ? null
+            : SendMoney.fromJson(json["send_money"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,9 +66,11 @@ class SendMoney {
   int? id;
   String? userId;
   String? isicNum;
+  String? matricule;
   String? userType;
   String? beforeCharge;
   String? amount;
+  String? nombreTicket;
   String? postBalance;
   String? charge;
   String? chargeType;
@@ -74,7 +83,7 @@ class SendMoney {
   String? updatedAt;
   String? createdAt;
   User? receiverUser;
-   String? firstname;
+  String? firstname;
   String? lastname;
 
   SendMoney({
@@ -83,7 +92,9 @@ class SendMoney {
     this.userId,
     this.userType,
     this.isicNum,
+    this.matricule,
     this.beforeCharge,
+    this.nombreTicket,
     this.amount,
     this.postBalance,
     this.charge,
@@ -102,25 +113,33 @@ class SendMoney {
 
   factory SendMoney.fromJson(Map<String, dynamic> json) => SendMoney(
         userId: json["user_id"] == null ? '' : json["user_id"].toString(),
-         firstname: json["firstname"],
+        firstname: json["firstname"],
         lastname: json["lastname"],
+        nombreTicket: json["nombre_ticket"] == null
+            ? ''
+            : json["nombre_ticket"].toString(),
         userType: json["user_type"].toString(),
-         isicNum: json["isic_num"].toString(),
+        isicNum: json["isic_num"].toString(),
+        matricule: json["matricule"].toString(),
         beforeCharge: json["before_charge"].toString(),
         amount: json["amount"] == null ? '' : json["amount"].toString(),
-        postBalance: json["post_balance"] == null ? '' : json["post_balance"].toString(),
+        postBalance:
+            json["post_balance"] == null ? '' : json["post_balance"].toString(),
         charge: json["charge"] == null ? '' : json["charge"].toString(),
         chargeType: json["charge_type"].toString(),
         trxType: json["trx_type"].toString(),
         remark: json["remark"].toString(),
         details: json["details"].toString(),
-        receiverId: json["receiver_id"] == null ? '' : json["receiver_id"].toString(),
+        receiverId:
+            json["receiver_id"] == null ? '' : json["receiver_id"].toString(),
         receiverType: json["receiver_type"].toString(),
         trx: json["trx"].toString(),
         updatedAt: json["updated_at"],
         createdAt: json["created_at"],
         id: json["id"],
-        receiverUser: json["receiver_user"] == null ? null : User.fromJson(json["receiver_user"]),
+        receiverUser: json["receiver_user"] == null
+            ? null
+            : User.fromJson(json["receiver_user"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -134,6 +153,7 @@ class SendMoney {
         "trx_type": trxType,
         "remark": remark,
         "details": details,
+        "nombre_ticket": nombreTicket,
         "receiver_id": receiverId,
         "receiver_type": receiverType,
         "trx": trx,

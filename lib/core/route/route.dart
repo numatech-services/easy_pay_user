@@ -1,4 +1,8 @@
 import 'package:get/get.dart';
+import 'package:viserpay/data/services/isic_activation_binding.dart';
+import 'package:viserpay/data/services/isic_bindings.dart';
+import 'package:viserpay/data/services/isic_history_binding.dart';
+import 'package:viserpay/data/services/isic_photo_upload_binding.dart';
 import 'package:viserpay/view/components/bottom-nav-bar/bottom_nav_bar.dart';
 import 'package:viserpay/view/screens/account/change-password/change_password_screen.dart';
 import 'package:viserpay/view/screens/account/delete-account/delete_account_screen.dart';
@@ -40,6 +44,11 @@ import 'package:viserpay/view/screens/edit_profile/edit_profile_screen.dart';
 import 'package:viserpay/view/screens/faq/faq_screen.dart';
 import 'package:viserpay/view/screens/helpNsupport/help_n_support_screen.dart';
 import 'package:viserpay/view/screens/image_preview/preview_image_screen.dart';
+import 'package:viserpay/view/screens/isic/isic_activation_screen.dart';
+import 'package:viserpay/view/screens/isic/isic_card_detail_screen.dart';
+import 'package:viserpay/view/screens/isic/isic_card_screen.dart';
+import 'package:viserpay/view/screens/isic/isic_history_screen.dart';
+import 'package:viserpay/view/screens/isic/isic_photo_upload_screen.dart';
 import 'package:viserpay/view/screens/language/language_screen.dart';
 
 import 'package:viserpay/view/screens/make-payment/make_payment_amount_screen/make_payment_amount_screen.dart';
@@ -108,6 +117,12 @@ class RouteHelper {
   static const String otpScreen = "/otp_screen";
   static const String bottomNavBar = "/bottom_nav_bar";
   static const String myWalletScreen = "/my_wallet_screen";
+    static const String isicCardScreen = '/isic-card';
+    static const String isicHistoryScreen = '/isic-history';
+    static const String isicPhotoScreen = '/isic-photo';
+    static const String isicActivationScreen = '/isic-activation';
+    static const String isicCardDetailScreen = '/isic-card-detail';
+
 
   static const String twoFactorSetupScreen = "/two-factor-setup-screen";
 
@@ -246,6 +261,31 @@ class RouteHelper {
   static const String imagePreviewScreen = '/image_preview_screen';
 
   List<GetPage> routes = [
+     // ISIC Routes
+     GetPage(
+      name: isicCardDetailScreen,
+      page: () => const IsicCardDetailScreen(),
+    ),
+    GetPage(
+      name: isicCardScreen,
+      page: () => const IsicCardScreen(),
+      binding: IsicCardBinding(),
+    ),
+    GetPage(
+      name: isicHistoryScreen,
+      page: () => const IsicHistoryScreen(),
+      binding: IsicHistoryBinding(),
+    ),
+    GetPage(
+      name: isicPhotoScreen,
+      page: () => const IsicPhotoUploadScreen(),
+      binding: IsicPhotoUploadBinding(),
+    ),
+    GetPage(
+      name: isicActivationScreen,
+      page: () => const IsicActivationScreen(),
+      binding: IsicActivationBinding(),
+    ),
     GetPage(name: splashScreen, page: () => const SplashScreen()),
     GetPage(name: loginScreen, page: () => const LoginScreen()),
     GetPage(name: forgotPasswordScreen, page: () => const ForgetPasswordScreen()),

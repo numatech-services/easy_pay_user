@@ -46,7 +46,8 @@ class ProfileController extends GetxController {
     isLoading = true;
     update();
     model = await profileRepo.loadProfileInfo();
-    if (model.data != null && model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
+    if (model.data != null &&
+        model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
       loadData(model);
     } else {
       isLoading = false;
@@ -71,7 +72,22 @@ class ProfileController extends GetxController {
       isLoading = true;
       update();
 
-      UserPostModel model = UserPostModel(firstname: firstName, lastName: lastName, mobile: user?.mobile ?? '',isic_num: user?.isic_num ?? '', email: user?.email ?? '', username: user?.username ?? '', countryCode: user?.countryCode ?? '', country: user?.country ?? '', mobileCode: '880', image: imageFile, address: address, state: state, zip: zip, city: city);
+      UserPostModel model = UserPostModel(
+          firstname: firstName,
+          lastName: lastName,
+          mobile: user?.mobile ?? '',
+          isic_num: user?.isic_num ?? '',
+          email: user?.email ?? '',
+          username: user?.username ?? '',
+          matricule: user?.matricule ?? '',
+          countryCode: user?.countryCode ?? '',
+          country: user?.country ?? '',
+          mobileCode: '880',
+          image: imageFile,
+          address: address,
+          state: state,
+          zip: zip,
+          city: city);
 
       bool b = await profileRepo.updateProfile(model, true);
 
@@ -96,7 +112,8 @@ class ProfileController extends GetxController {
 
   void loadData(ProfileResponseModel? model) {
     firstNameController.text = model?.data?.user?.firstname ?? '';
-    profileRepo.apiClient.sharedPreferences.setString(SharedPreferenceHelper.userNameKey, '${model?.data?.user?.username}');
+    profileRepo.apiClient.sharedPreferences.setString(
+        SharedPreferenceHelper.userNameKey, '${model?.data?.user?.username}');
     lastNameController.text = model?.data?.user?.lastname ?? '';
     emailController.text = model?.data?.user?.email ?? '';
     mobileNoController.text = model?.data?.user?.mobile ?? '';
@@ -104,11 +121,13 @@ class ProfileController extends GetxController {
     stateController.text = model?.data?.user?.state ?? '';
     zipCodeController.text = model?.data?.user?.zip ?? '';
     cityController.text = model?.data?.user?.city ?? '';
-    imageUrl = model?.data?.user?.image == null ? '' : '${model?.data?.user?.image}';
+    imageUrl =
+        model?.data?.user?.image == null ? '' : '${model?.data?.user?.image}';
     user2faIsOne = model?.data?.user?.ts == '1' ? true : false;
 
     if (imageUrl.isNotEmpty && imageUrl != 'null') {
-      imageUrl = '${UrlContainer.domainUrl}/assets/images/user/profile/$imageUrl';
+      imageUrl =
+          '${UrlContainer.domainUrl}/assets/images/user/profile/$imageUrl';
     }
 
     isLoading = false;

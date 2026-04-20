@@ -87,7 +87,7 @@ class TransactionCard extends StatelessWidget {
                             ),
                           ] else ...[
                             Text(
-                              "${transaction.payment_type}".replaceAll("_", " ").toTitleCase().tr,
+                              "Ticket ${transaction.payment_type}".replaceAll("_", " ").toTitleCase().tr,
                               style: regularDefault.copyWith(color: MyColor.getTextColor(), fontWeight: FontWeight.w500),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -96,8 +96,7 @@ class TransactionCard extends StatelessWidget {
                           const SizedBox(height: Dimensions.space5),
                           SizedBox(
                             width: 150,
-                            child: Text(
-                              
+                            child: Text(                              
                               transaction.details.toString(),
                               style: regularSmall.copyWith(color: MyColor.getTextColor().withOpacity(0.5)),
                               overflow: TextOverflow.ellipsis,
@@ -112,7 +111,7 @@ class TransactionCard extends StatelessWidget {
               ),
               Expanded(
                 child: CardColumn(
-                  header: "${transaction.trxType}${controller.currencySym}${StringConverter.formatNumber(transaction.amount.toString())}",
+                  header: "cfa${StringConverter.formatNumber(transaction.amount.toString())}",
                   body: DateConverter.convertIsoToString(transaction.createdAt.toString()),
                   alignmentEnd: true,
                   headerTextStyle: boldDefault.copyWith(

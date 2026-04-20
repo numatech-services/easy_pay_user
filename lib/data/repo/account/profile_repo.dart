@@ -20,16 +20,21 @@ class ProfileRepo {
 
   Future<dynamic> completeProfile(UserPostModel m) async {
     try {
-      String url = '${UrlContainer.baseUrl}${UrlContainer.profileCompleteEndPoint}';
+      String url =
+          '${UrlContainer.baseUrl}${UrlContainer.profileCompleteEndPoint}';
       Map<String, String> finalMap = {
         'username': m.username,
-         'isic_num': m.isic_num,
+
+        'isic_num': m.isic_num,
+        //ajout de matricule
+        'matricule': m.matricule,
         'address': m.address ?? '',
         'zip': m.zip ?? '',
         'state': m.state ?? "",
         'city': m.city ?? '',
       };
-      ResponseModel responseModel = await apiClient.request(url, Method.postMethod, finalMap, passHeader: true);
+      ResponseModel responseModel = await apiClient
+          .request(url, Method.postMethod, finalMap, passHeader: true);
 
       return responseModel;
     } catch (e) {
@@ -41,37 +46,45 @@ class ProfileRepo {
     try {
       apiClient.initToken();
 
-      String url = '${UrlContainer.baseUrl}${isProfile ? UrlContainer.updateProfileEndPoint : UrlContainer.profileCompleteEndPoint}';
+      String url =
+          '${UrlContainer.baseUrl}${isProfile ? UrlContainer.updateProfileEndPoint : UrlContainer.profileCompleteEndPoint}';
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
       Map<String, String> finalMap = {
         'firstname': m.firstname,
         'lastname': m.lastName,
-         'isic_num': m.isic_num,
+        'isic_num': m.isic_num,
+        'matricule':m.matricule,
         'address': m.address ?? '',
         'zip': m.zip ?? '',
         'state': m.state ?? "",
         'city': m.city ?? '',
       };
 
-      request.headers.addAll(<String, String>{'Authorization': 'Bearer ${apiClient.token}'});
+      request.headers.addAll(
+          <String, String>{'Authorization': 'Bearer ${apiClient.token}'});
       if (m.image != null) {
-        request.files.add(http.MultipartFile('image', m.image!.readAsBytes().asStream(), m.image!.lengthSync(), filename: m.image!.path.split('/').last));
+        request.files.add(http.MultipartFile(
+            'image', m.image!.readAsBytes().asStream(), m.image!.lengthSync(),
+            filename: m.image!.path.split('/').last));
       }
       request.fields.addAll(finalMap);
 
       http.StreamedResponse response = await request.send();
 
       String jsonResponse = await response.stream.bytesToString();
-      AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(jsonDecode(jsonResponse));
+      AuthorizationResponseModel model =
+          AuthorizationResponseModel.fromJson(jsonDecode(jsonResponse));
 
       if (model.status?.toLowerCase() == MyStrings.success.toLowerCase()) {
-        CustomSnackBar.success(successList: model.message?.success ?? [MyStrings.success]);
+        CustomSnackBar.success(
+            successList: model.message?.success ?? [MyStrings.success]);
         sendUserToken();
 
         return true;
       } else {
-        CustomSnackBar.error(errorList: model.message?.error ?? [MyStrings.requestFail.tr]);
+        CustomSnackBar.error(
+            errorList: model.message?.error ?? [MyStrings.requestFail.tr]);
         return false;
       }
     } catch (e) {
@@ -82,10 +95,12 @@ class ProfileRepo {
   Future<ProfileResponseModel> loadProfileInfo() async {
     String url = '${UrlContainer.baseUrl}${UrlContainer.getProfileEndPoint}';
 
-    ResponseModel responseModel = await apiClient.request(url, Method.getMethod, null, passHeader: true);
+    ResponseModel responseModel =
+        await apiClient.request(url, Method.getMethod, null, passHeader: true);
 
     if (responseModel.statusCode == 200) {
-      ProfileResponseModel model = ProfileResponseModel.fromJson(jsonDecode(responseModel.responseJson));
+      ProfileResponseModel model =
+          ProfileResponseModel.fromJson(jsonDecode(responseModel.responseJson));
       if (model.status == 'success') {
         return model;
       } else {
@@ -98,8 +113,11 @@ class ProfileRepo {
 
   Future<bool> sendUserToken() async {
     String deviceToken;
-    if (apiClient.sharedPreferences.containsKey(SharedPreferenceHelper.fcmDeviceKey)) {
-      deviceToken = apiClient.sharedPreferences.getString(SharedPreferenceHelper.fcmDeviceKey) ?? '';
+    if (apiClient.sharedPreferences
+        .containsKey(SharedPreferenceHelper.fcmDeviceKey)) {
+      deviceToken = apiClient.sharedPreferences
+              .getString(SharedPreferenceHelper.fcmDeviceKey) ??
+          '';
     } else {
       deviceToken = '';
     }
@@ -114,7 +132,8 @@ class ProfileRepo {
         if (deviceToken == fcmDeviceToken) {
           success = true;
         } else {
-          apiClient.sharedPreferences.setString(SharedPreferenceHelper.fcmDeviceKey, fcmDeviceToken);
+          apiClient.sharedPreferences
+              .setString(SharedPreferenceHelper.fcmDeviceKey, fcmDeviceToken);
           success = await sendUpdatedToken(fcmDeviceToken);
         }
       });
@@ -129,7 +148,8 @@ class ProfileRepo {
   Future<bool> sendUpdatedToken(String deviceToken) async {
     String url = '${UrlContainer.baseUrl}${UrlContainer.deviceTokenEndPoint}';
     Map<String, String> map = deviceTokenMap(deviceToken);
-    final res = await apiClient.request(url, Method.postMethod, map, passHeader: true);
+    final res =
+        await apiClient.request(url, Method.postMethod, map, passHeader: true);
     print("res.message ${res.message}");
     print(res.message);
     print(res.message);

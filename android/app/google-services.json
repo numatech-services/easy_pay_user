@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "183434543868",
-    "project_id": "easy-pay-fba8c",
-    "storage_bucket": "easy-pay-fba8c.firebasestorage.app"
+    "project_number": "290735589138",
+    "project_id": "easy-pay-user",
+    "storage_bucket": "easy-pay-user.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:183434543868:android:13df4b7f69344746850d79",
+        "mobilesdk_app_id": "1:290735589138:android:3e72e11c03dd8169e3d5cb",
         "android_client_info": {
           "package_name": "org.campusniger.easypay"
         }
@@ -15,26 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAyokosXFva3AMPjqm-n5i1pjMkXp6zYU8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:183434543868:android:d62ccbda6c167d27850d79",
-        "android_client_info": {
-          "package_name": "org.campusniger.easypayagent"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAyokosXFva3AMPjqm-n5i1pjMkXp6zYU8"
+          "current_key": "AIzaSyCOFVlcNu1tUA6OTBYefFIcSUi1oGTLHKQ"
         }
       ],
       "services": {

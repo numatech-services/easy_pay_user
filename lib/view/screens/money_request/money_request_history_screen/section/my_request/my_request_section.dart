@@ -80,7 +80,7 @@ class _MyRequestSectionState extends State<MyRequestSection> {
                             }
                             return MoneyRequestHistoryCard(
                               request: controller.myRequestList[index],
-                              currencySym: controller.currencySym,
+                              currencySym: "tk",
                               currency: controller.currency,
                             );
                           },

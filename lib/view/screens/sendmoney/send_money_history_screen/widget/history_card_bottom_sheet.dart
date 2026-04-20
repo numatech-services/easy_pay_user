@@ -36,8 +36,8 @@ class HistoryCardBottomSheet extends StatelessWidget {
               ),
               CardColumn(
                 alignmentEnd: true,
-                header: MyStrings.amount.tr,
-                body: "${controller.currencySym}${StringConverter.formatNumber(controller.sendmoneyHistorydata[index].beforeCharge ?? "")}",
+                header: "Montant Ticket", 
+                body: "cfa${StringConverter.formatNumber(controller.sendmoneyHistorydata[index].beforeCharge ?? "")}",
               )
             ],
           ),
@@ -46,14 +46,14 @@ class HistoryCardBottomSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CardColumn(
-                header: MyStrings.charge.tr,
-                body: "${controller.currencySym}${StringConverter.formatNumber(controller.sendmoneyHistorydata[index].charge ?? "")} ",
+                header:"Type de ticket",
+                body: "Ticket ${controller.sendmoneyHistorydata[index].ticketType} ",
               ),
-              CardColumn(
-                header: MyStrings.finalAmount.tr,
-                body: "${controller.currencySym}${StringConverter.formatNumber(controller.sendmoneyHistorydata[index].amount ?? "")}",
-                alignmentEnd: true,
-              ),
+              // CardColumn(
+              //   header: MyStrings.finalAmount.tr,
+              //   body: "${controller.currencySym}${StringConverter.formatNumber(controller.sendmoneyHistorydata[index].amount ?? "")}",
+              //   alignmentEnd: true,
+              // ),
             ],
           ),
           const SizedBox(height: Dimensions.space15),
@@ -61,8 +61,8 @@ class HistoryCardBottomSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CardColumn(
-                header: MyStrings.remainingBalance.tr,
-                body: "${controller.currencySym}${StringConverter.formatNumber(controller.sendmoneyHistorydata[index].postBalance ?? "")}",
+                header: "Ticket Restant",
+                body: "tk${controller.sendmoneyHistorydata[index].postBalance ?? ""}",
               ),
               CardColumn(
                 alignmentEnd: true,

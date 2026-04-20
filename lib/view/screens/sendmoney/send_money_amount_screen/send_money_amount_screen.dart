@@ -34,6 +34,8 @@ class SendMoneyAmountScreen extends StatefulWidget {
 
 class _SendMoneyAmountScreenState extends State<SendMoneyAmountScreen> {
   final InActivityTimer timer = InActivityTimer();
+  List<String> ticketTypes = ['Petit Déjeuner', 'Déjeuner', 'Dîner', 'Transport'];
+String? selectedTicketType;
   @override
   void initState() {
     String? username = Get.arguments != null ? Get.arguments[0] : null;
@@ -115,12 +117,12 @@ class _SendMoneyAmountScreenState extends State<SendMoneyAmountScreen> {
                           onpress: () async {
                             printx(controller.currentBalance);
         
-                            double currntBalance = NumberFormat.decimalPattern().parse(controller.currentBalance).toDouble();
+                            int currntBalance = int.parse(controller.currentBalance);
         
                             if (controller.amountController.text.trim().isNotEmpty) {
                               bool isValid = await MyUtils().balanceValidation(
                                 currentBalance: currntBalance,
-                                amount: double.tryParse(controller.amountController.text) ?? 0,
+                                amount: int.parse(controller.amountController.text) ,
                               );
         
                               if (isValid) {
@@ -159,7 +161,7 @@ class _SendMoneyAmountScreenState extends State<SendMoneyAmountScreen> {
                               keyboardType: TextInputType.numberWithOptions(decimal: true),
                               textAlign: TextAlign.center, // Centre le texte dans le champ
                               decoration: const InputDecoration(
-                                hintText: "Entrez le montant",
+                                hintText: "Nombre de tickets",
                                 border: InputBorder.none,
                               ),
                               onChanged: (value) {
@@ -172,26 +174,47 @@ class _SendMoneyAmountScreenState extends State<SendMoneyAmountScreen> {
                         ),
                       ),
                      const SizedBox(height: 20), 
-                     Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Switch(
-                              value: controller.isFeesIncluded, 
-                              onChanged: (value) {
-                                setState(() {
-                                  controller.isFeesIncluded = value; 
-                                  controller.saveFeeIncludedStatus(value); 
-                                });
-                              },
-                              activeColor: Colors.green, 
-                              inactiveThumbColor: Colors.grey, 
-                            ),
-                            const Text(
-                              "Frais inclus",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ],
-                        ),
+                     DropdownButtonFormField<String>(
+  decoration: const InputDecoration(
+    labelText: 'Type de ticket',
+    border: OutlineInputBorder(),
+    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+  ),
+  value: selectedTicketType,
+  onChanged: (value) {
+    setState(() {
+      selectedTicketType = value;
+      controller.type_payment = value ?? '';
+    });
+  },
+  items: ticketTypes.map((type) {
+    return DropdownMenuItem<String>(
+      value: type,
+      child: Text(type),
+    );
+  }).toList(),
+)
+
+                    //  Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Switch(
+                    //           value: controller.isFeesIncluded, 
+                    //           onChanged: (value) {
+                    //             setState(() {
+                    //               controller.isFeesIncluded = value; 
+                    //               controller.saveFeeIncludedStatus(value); 
+                    //             });
+                    //           },
+                    //           activeColor: Colors.green, 
+                    //           inactiveThumbColor: Colors.grey, 
+                    //         ),
+                    //         const Text(
+                    //           "Frais inclus",
+                    //           style: TextStyle(fontSize: 16),
+                    //         ),
+                    //       ],
+                    //     ),
         
         
                         ],

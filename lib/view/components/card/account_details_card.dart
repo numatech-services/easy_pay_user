@@ -29,7 +29,7 @@ class AccountDetailsCard extends StatelessWidget {
           Expanded(
             flex: 4,
             child: CardColumn(
-              header: MyStrings.amount.tr,
+              header:"Nombre de tickets",
               body: amount,
               space: 5,
               // headerTextDecoration: regularDefault.copyWith(color: MyColor.colorGrey, fontSize: Dimensions.fontDefault-1),
@@ -42,15 +42,15 @@ class AccountDetailsCard extends StatelessWidget {
             color: MyColor.borderColor,
             margin: const EdgeInsets.symmetric(horizontal: 10),
           ),
-          Expanded(
-            flex: 4,
-            child: CardColumn(
-              header: MyStrings.charge.tr,
-              body: charge,
-              space: 5,
-              bodyTextStyle: boldMediumLarge.copyWith(fontSize: 16),
-            ),
-          ),
+          // Expanded(
+          //   flex: 4,
+          //   child: CardColumn(
+          //     header: MyStrings.charge.tr,
+          //     body: charge,
+          //     space: 5,
+          //     bodyTextStyle: boldMediumLarge.copyWith(fontSize: 16),
+          //   ),
+          // ),
           Container(
             height: Dimensions.space50,
             width: 1,

@@ -15,8 +15,8 @@ import 'package:viserpay/view/components/image/my_image_widget.dart';
 class CashOutHistoryCard extends StatelessWidget {
   final int index;
   final VoidCallback press;
-  LatestCashOutHistory transaction;
-  String currencySym;
+  final LatestCashOutHistory transaction;
+  final String currencySym;
   CashOutHistoryCard({
     super.key,
     required this.index,
@@ -61,44 +61,128 @@ class CashOutHistoryCard extends StatelessWidget {
                     ),
                     const SizedBox(width: Dimensions.space10),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${transaction.remark}".replaceAll("_", " ").toTitleCase().tr,
-                            style: regularDefault.copyWith(color: MyColor.getTextColor(), fontWeight: FontWeight.w500),
-                            maxLines: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${transaction.remark}".replaceAll("_", " ").toTitleCase().tr,
+                          style: regularDefault.copyWith(color: MyColor.getTextColor(), fontWeight: FontWeight.w500),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: Dimensions.space5),
+
+                        
+                        Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: transaction.status.toString() == "1"
+                                    ? Colors.green.withOpacity(0.2)
+                                    : transaction.status.toString() == "3"
+                                        ? Colors.orange.withOpacity(0.2)
+                                        : Colors.red.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Text(
+                                transaction.status.toString() == "1"
+                                    ? "Envoyé"
+                                    : transaction.status.toString() == "3"
+                                        ? "Annulée"
+                                        : "Rétiré",
+                                style: TextStyle(
+                                  color: transaction.status.toString() == "1"
+                                      ? Colors.green
+                                      : transaction.status.toString() == "3"
+                                          ? Colors.orange
+                                          : Colors.red,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            )
+                            ,
+
+                        const SizedBox(height: Dimensions.space5),
+                        SizedBox(
+                          width: 150,
+                          child: Text(
+                            transaction.trx.toString(),
+                            style: regularSmall.copyWith(color: MyColor.getTextColor().withOpacity(0.5)),
                             overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
-                          const SizedBox(height: Dimensions.space5),
-                          SizedBox(
-                            width: 150,
-                            child: Text(
-                              transaction.trx.toString(),
-                              style: regularSmall.copyWith(color: MyColor.getTextColor().withOpacity(0.5)),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          )
-                        ],
-                      ),
-                    )
+                        )
+                      ],
+                    ),
+                  ),
+
                   ],
                 ),
               ),
               Expanded(
-                child: CardColumn(
-                  header: "${transaction.trxType}$currencySym${StringConverter.formatNumber(transaction.amount.toString())}",
-                  body: DateConverter.formatDateMonthYear(transaction.createdAt.toString()),
-                  alignmentEnd: true,
-                  headerTextStyle: boldDefault.copyWith(
-                    color: transaction.trxType == "-" ? MyColor.colorRed : MyColor.colorGreen,
-                    fontSize: Dimensions.fontMediumLarge - 1,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  bodyTextStyle: lightMediumLarge.copyWith(color: MyColor.getGreyText(), fontSize: Dimensions.fontDefault - 1),
-                ),
-              )
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      CardColumn(
+        header: "${transaction.trxType}$currencySym${StringConverter.formatNumber(transaction.amount.toString())}",
+        body: DateConverter.formatDateMonthYear(transaction.createdAt.toString()),
+        alignmentEnd: true,
+        headerTextStyle: boldDefault.copyWith(
+          color: transaction.trxType == "-" ? MyColor.colorRed : MyColor.colorGreen,
+          fontSize: Dimensions.fontMediumLarge - 1,
+          fontWeight: FontWeight.w500,
+        ),
+        bodyTextStyle: lightMediumLarge.copyWith(color: MyColor.getGreyText(), fontSize: Dimensions.fontDefault - 1),
+      ),
+      if (transaction.status.toString() == "1")
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child:ElevatedButton(
+  onPressed: () {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          title: const Text("Confirmation"),
+          content: const Text("Voulez-vous vraiment annuler cette transaction ?"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Non", style: TextStyle(color: Colors.grey)),
+              onPressed: () {
+                Navigator.of(context).pop(); 
+              },
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
+              child: const Text("Oui", style: TextStyle(color: Colors.white),),
+              onPressed: () {
+                Navigator.of(context).pop(); 
+
+                controller.submitCashOutCanceling(transaction.id.toString());
+              },
+            ),
+          ],
+        );
+      },
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    foregroundColor: Colors.white,
+    backgroundColor: Colors.red,
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+    textStyle: const TextStyle(fontSize: 12),
+  ),
+  child: const Text("Annuler"),
+),
+
+        ),
+    ],
+  ),
+),
+
             ],
           ),
         ),

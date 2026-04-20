@@ -257,6 +257,30 @@ String ?pass;
     update();
   }
 
+    Future<void> submitCashOutCanceling(String id_trans) async {
+    isLoading = true;
+    update();
+
+    ResponseModel responseModel = await cashoutRepo.cashoutCanceling(
+      idTrans: id_trans.toString(),
+    );
+    if (responseModel.statusCode == 200) {
+      CashoutSubmitResponseModal modal = CashoutSubmitResponseModal.fromJson(jsonDecode(responseModel.responseJson));
+
+      if (modal.status == "success") {
+
+         Get.toNamed(RouteHelper.bottomNavBar, arguments: []);
+          CustomSnackBar.success(successList: ["Rétrait annulé avec succès"]);
+     
+      } else {
+        CustomSnackBar.error(errorList: modal.message?.error ?? [MyStrings.somethingWentWrong]);
+      }
+    } else {
+      CustomSnackBar.error(errorList: [responseModel.message]);
+    }
+    isLoading = false;
+    update();
+  }
 //
   int page = 0;
   String? nextPageUrl;

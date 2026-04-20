@@ -40,7 +40,8 @@ class TransactionHistoryBottomSheet extends StatelessWidget {
               CardColumn(
                 alignmentEnd: true,
                 header: MyStrings.date.tr,
-                body: DateConverter.convertIsoToString(controller.latestTransactions[index].createdAt ?? ""),
+                body: DateConverter.convertIsoToString(
+                    controller.latestTransactions[index].createdAt ?? ""),
               ),
             ],
           ),
@@ -50,13 +51,21 @@ class TransactionHistoryBottomSheet extends StatelessWidget {
             children: [
               CardColumn(
                 alignmentEnd: false,
-                header: MyStrings.amount.tr,
-                body: "${controller.defaultCurrencySymbol}${StringConverter.formatNumber(controller.latestTransactions[index].amount ?? "")}",
+                header: "Montant/Ticket",
+                body:
+                    "cfa${StringConverter.formatNumber(controller.latestTransactions[index].amount ?? "")}",
               ),
+              // CardColumn(
+              //   alignmentEnd: true,
+              //   header: MyStrings.charge.tr,
+              //   body: "${controller.defaultCurrencySymbol}${StringConverter.formatNumber(controller.latestTransactions[index].charge ?? "")} ",
+
+              // ),
               CardColumn(
                 alignmentEnd: true,
-                header: MyStrings.charge.tr,
-                body: "${controller.defaultCurrencySymbol}${StringConverter.formatNumber(controller.latestTransactions[index].charge ?? "")} ",
+                header: "Ticket Restant",
+                body:
+                    "${controller.defaultCurrencySymbol}${controller.latestTransactions[index].postBalance ?? ""} ",
               ),
             ],
           ),
@@ -66,23 +75,19 @@ class TransactionHistoryBottomSheet extends StatelessWidget {
             children: [
               CardColumn(
                 alignmentEnd: false,
-                header: MyStrings.finalAmount.tr,
-                body: "${controller.defaultCurrencySymbol}${StringConverter.formatNumber(controller.latestTransactions[index].amount ?? "")}",
-              ),
-              CardColumn(
-                alignmentEnd: true,
-                header: MyStrings.remainingBalance.tr,
-                body: "${controller.defaultCurrencySymbol}${StringConverter.formatNumber(controller.latestTransactions[index].postBalance ?? "")} ",
+                header: "Tickets transferés",
+                body:
+                    "${controller.latestTransactions[index].ticketNumber ?? ""}",
               ),
             ],
           ),
           const SizedBox(height: Dimensions.space15),
-            CardColumn(
-                alignmentEnd: false,
-                header: MyStrings.details.tr,
-                body: "${controller.latestTransactions[index].details == '' || controller.latestTransactions[index].details!.isEmpty ? const SizedBox.shrink() : controller.latestTransactions[index].details ?? ''} ",
-              ),
-          
+          CardColumn(
+            alignmentEnd: false,
+            header: MyStrings.details.tr,
+            body:
+                "${controller.latestTransactions[index].details == '' || controller.latestTransactions[index].details!.isEmpty ? const SizedBox.shrink() : controller.latestTransactions[index].details ?? ''} ",
+          ),
         ],
       ),
     );

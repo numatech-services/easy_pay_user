@@ -36,7 +36,7 @@ class SendMoneyResponseModel {
 
 class Data {
   List<String>? otpType;
-  String? currentBalance;
+  int? currentBalance;
   SendMoneyCharge? sendMoneyCharge;
   List<LatestSendMoneyHistory>? latestSendMoneyHistory;
 
@@ -49,7 +49,7 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         otpType: json["otp_type"] == null ? [] : List<String>.from(json["otp_type"]!.map((x) => x)),
-        currentBalance: json["current_balance"] ?? "",
+        currentBalance: json["current_balance"],
         sendMoneyCharge: json["send_money_charge"] == null ? null : SendMoneyCharge.fromJson(json["send_money_charge"]),
         latestSendMoneyHistory: json["latest_send_money_history"] == null ? [] : List<LatestSendMoneyHistory>.from(json["latest_send_money_history"]!.map((x) => LatestSendMoneyHistory.fromJson(x))),
       );
@@ -71,11 +71,13 @@ class LatestSendMoneyHistory {
   String? receiverType;
   String? beforeCharge;
   String? amount;
+  String? nombreTicket;
   String? charge;
   String? postBalance;
   String? trxType;
   String? chargeType;
   String? trx;
+  String? ticketType;
   String? details;
   String? remark;
   String? reference;
@@ -94,11 +96,13 @@ class LatestSendMoneyHistory {
     this.receiverType,
     this.beforeCharge,
     this.amount,
+  this.nombreTicket,
     this.charge,
     this.postBalance,
     this.trxType,
     this.chargeType,
     this.trx,
+    this.ticketType,
     this.details,
     this.remark,
     this.reference,
@@ -120,10 +124,12 @@ class LatestSendMoneyHistory {
       beforeCharge: json["before_charge"].toString(),
       amount: json["amount"].toString(),
       charge: json["charge"].toString(),
+      nombreTicket: json["nombre_ticket"] == null ? null : json["nombre_ticket"].toString(),
       postBalance: json["post_balance"].toString(),
       trxType: json["trx_type"].toString(),
       chargeType: json["charge_type"].toString(),
       trx: json["trx"].toString(),
+      ticketType: json["ticket_type"] == null ? null : json["ticket_type"].toString(),
       details: json["details"].toString(),
       remark: json["remark"].toString(),
       reference: json["reference"].toString(),
@@ -149,6 +155,8 @@ class LatestSendMoneyHistory {
         "trx_type": [trxType],
         "charge_type": [chargeType],
         "trx": trx,
+        "ticket_type": ticketType,
+        "nombre_ticket": nombreTicket,
         "details": [details],
         "remark": [remark],
         "reference": reference,

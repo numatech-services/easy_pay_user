@@ -34,7 +34,7 @@ class MoneyRequestHistoryCard extends StatelessWidget {
         receiverNameRaw.trim().isNotEmpty ? receiverNameRaw : "Inconnu";
 
     final requestAmount = request.requestAmount != null
-        ? "$currencySym${StringConverter.formatNumber(request.requestAmount!)}"
+        ? "$currencySym${request.requestAmount!}"
         : "$currencySym-";
 
    

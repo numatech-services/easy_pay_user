@@ -42,7 +42,6 @@ class _SendMoneyPinScreenState extends State<SendMoneyPinScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.pinController.clear();
-      controller.changeInfoWidget();
     });
     timer.startTimer(context);
   }
@@ -96,9 +95,9 @@ class _SendMoneyPinScreenState extends State<SendMoneyPinScreen> {
                             height: Dimensions.space16,
                           ),
                           AccountDetailsCard(
-                            amount: controller.currencySym + controller.mainAmount.toString(),
-                            charge: controller.currencySym + controller.charge,
-                            total: controller.currencySym + controller.payableText.toString(),// controller.payableText.toString(),
+                            amount: "tk" + controller.amountController.text,
+                            charge: "tk" + controller.charge,
+                            total: "tk" + controller.amountController.text,// controller.payableText.toString(),
                           ),
                           const SizedBox(
                             height: Dimensions.space20,
@@ -165,17 +164,18 @@ class _SendMoneyPinScreenState extends State<SendMoneyPinScreen> {
                             ), 
                             suffixWidget: GestureDetector(
                               onTap: () {
-                                String newBalance = StringConverter.minus(controller.currentBalance, controller.payableText.toString());
+                               int newBalance = int.parse(controller.currentBalance) -
+                 int.parse(controller.amountController.text);
                                 if (controller.otpType.isEmpty) {
                                   if (controller.validatePinCode()) {
-                                    submitDialog(context, controller, newBalance);
+                                    submitDialog(context, controller, newBalance.toString());
                                   }
                                 } else {
                                   if (controller.validatePinCode() == true) {
                                     if (controller.selectedOtpType == 'null') {
                                       CustomSnackBar.error(errorList: [MyStrings.pleaseSelectOtp.tr]);
                                     } else {
-                                      submitDialog(context, controller, newBalance);
+                                      submitDialog(context, controller, newBalance.toString());
                                     }
                                   }
                                 }
@@ -193,17 +193,18 @@ class _SendMoneyPinScreenState extends State<SendMoneyPinScreen> {
                               ),
                             ),
                             onSubmit: () {
-                              String newBalance = StringConverter.minus(controller.currentBalance, controller.mainAmount.toString());
+int newBalance = int.parse(controller.currentBalance) -
+                 int.parse(controller.amountController.text);
                               if (controller.otpType.isEmpty) {
                                 if (controller.validatePinCode()) {
-                                  submitDialog(context, controller, newBalance);
+                                  submitDialog(context, controller, newBalance.toString());
                                 }
                               } else {
                                 if (controller.validatePinCode() == true) {
                                   if (controller.selectedOtpType == 'null') {
                                     CustomSnackBar.error(errorList: [MyStrings.pleaseSelectOtp.tr]);
                                   } else {
-                                    submitDialog(context, controller, newBalance);
+                                    submitDialog(context, controller, newBalance.toString());
                                   }
                                 }
                               }
@@ -228,9 +229,9 @@ class _SendMoneyPinScreenState extends State<SendMoneyPinScreen> {
         subtitle: "+${controller.selectedContact?.number}",
       ),
       cashDetails: CashDetailsColumn(
-        total: controller.currencySym + MyUtils().formatAmount(double.parse(controller.payableText.toString()), currency: "CFA") ,
-        newBalance: controller.currencySym + MyUtils().formatAmount(double.parse(newBalance), currency: "CFA"),
-        charge: MyUtils.getChargeText("${controller.currencySym}${MyUtils().formatAmount(double.parse(controller.charge), currency: "CFA")}"),
+        total: controller.amountController.text + "tk" ,
+        newBalance: newBalance+ "tk",
+        charge: MyUtils.getChargeText("${controller.charge + "TK"}"),
       ),
       onfinish: () {},
       onwaiting: () {

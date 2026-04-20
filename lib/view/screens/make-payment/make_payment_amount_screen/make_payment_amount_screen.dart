@@ -83,12 +83,12 @@ class _MakePaymentAmountScreenState extends State<MakePaymentAmountScreen> {
   focusNode: controller.amountFocusNode,
   textEditingController: controller.amountController,
   onpress: () async {
-    double currntBalance = NumberFormat.decimalPattern()
+    int currntBalance = int
         .parse(controller.currentBalance)
-        .toDouble();
+        ;
 
     if (controller.amountController.text.trim().isNotEmpty) {
-      double amount = double.tryParse(controller.amountController.text) ?? 0;
+     int amount = int.tryParse(controller.amountController.text) ?? 0;
 
       // Attendre le résultat de balanceValidation
       bool isValid = await MyUtils().balanceValidation(

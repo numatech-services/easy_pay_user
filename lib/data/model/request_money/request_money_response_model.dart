@@ -36,7 +36,7 @@ class RequestMoneyResponseModel {
 
 class Data {
   List<String>? otpType;
-  String? currentBalance;
+  int? currentBalance;
   RequestedMoneyCharge? requestMoneyCharge;
 
   Data({
@@ -47,7 +47,7 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         otpType: json["otp_type"] == null ? [] : List<String>.from(json["otp_type"]!.map((x) => x)),
-        currentBalance: json["current_balance"] ?? "",
+        currentBalance: json["current_balance"] ,
         requestMoneyCharge: json["transfer_charge"] == null ? null : RequestedMoneyCharge.fromJson(json["transfer_charge"]),
       );
 

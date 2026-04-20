@@ -84,12 +84,12 @@ class _RechargeAmountScreenState extends State<RechargeAmountScreen> {
                   focusNode: controller.amountFocusNode,
                   textEditingController: controller.amountController,
                   onpress: () {
-                    double currntBalance = NumberFormat.decimalPattern().parse(controller.currentBalance).toDouble();
+                  int currntBalance = int.parse(controller.currentBalance);
                     if (controller.amountController.text.trim().isNotEmpty) {
                       MyUtils()
                           .balanceValidation(
                             currentBalance: currntBalance,
-                            amount: double.tryParse(controller.amountController.text) ?? 0,
+                            amount: int.tryParse(controller.amountController.text) ?? 0,
                           )
                           .then((isValid) {
                         if (isValid) {

@@ -51,19 +51,24 @@ class _MyWebViewWidgetState extends State<MyWebViewWidget> {
     }
     return Stack(
       children: [
-        isLoading ? const Center(child: CircularProgressIndicator()) : const SizedBox(),
+        isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : const SizedBox(),
         InAppWebView(
           key: webViewKey,
-          initialUrlRequest: URLRequest(url: Uri.parse(url)),
+          initialUrlRequest: URLRequest(url: WebUri(url)),
           onWebViewCreated: (controller) {
             webViewController = controller;
           },
           initialOptions: options,
           onLoadStart: (controller, url) {
-            if (url.toString() == '${UrlContainer.domainUrl}/user/deposit/history') {
+            if (url.toString() ==
+                '${UrlContainer.domainUrl}/user/deposit/history') {
               Get.offAndToNamed(RouteHelper.addMoneyHistoryScreen);
-              CustomSnackBar.success(successList: [MyStrings.requestSuccess.tr]);
-            } else if (url.toString() == '${UrlContainer.baseUrl}user/deposit') {
+              CustomSnackBar.success(
+                  successList: [MyStrings.requestSuccess.tr]);
+            } else if (url.toString() ==
+                '${UrlContainer.baseUrl}user/deposit') {
               Get.back();
               CustomSnackBar.error(errorList: [MyStrings.requestFail.tr]);
             }
@@ -73,12 +78,22 @@ class _MyWebViewWidgetState extends State<MyWebViewWidget> {
             });
           },
           androidOnPermissionRequest: (controller, origin, resources) async {
-            return PermissionRequestResponse(resources: resources, action: PermissionRequestResponseAction.GRANT);
+            return PermissionRequestResponse(
+                resources: resources,
+                action: PermissionRequestResponseAction.GRANT);
           },
           shouldOverrideUrlLoading: (controller, navigationAction) async {
             var uri = navigationAction.request.url!;
 
-            if (!["http", "https", "file", "chrome", "data", "javascript", "about"].contains(uri.scheme)) {
+            if (![
+              "http",
+              "https",
+              "file",
+              "chrome",
+              "data",
+              "javascript",
+              "about"
+            ].contains(uri.scheme)) {
               if (await canLaunchUrl(Uri.parse(url))) {
                 await launchUrl(
                   Uri.parse(url),

@@ -1,12 +1,14 @@
 import 'dart:io';
 
-class UserPostModel{
+class UserPostModel {
   final String firstname;
   final String lastName;
   final String isic_num;
   final String mobile;
   final String email;
   final String username;
+  //ajout de matricule
+  final String matricule;
   final String countryCode;
   final String country;
   final String mobileCode;
@@ -16,15 +18,22 @@ class UserPostModel{
   final String? zip;
   final String? city;
 
-
-  UserPostModel({
-    required this.firstname,required this.lastName,required this.isic_num,required this.mobile,required this.email,required this.username,required this.countryCode,
-    required this.country,required this.mobileCode,required this.image,required this.address,required this.state,required this.zip,required this.city
-  });
-
-
-
-
+  UserPostModel(
+      {required this.firstname,
+      required this.lastName,
+      required this.isic_num,
+      required this.mobile,
+      required this.email,
+      required this.username,
+      required this.matricule,
+      required this.countryCode,
+      required this.country,
+      required this.mobileCode,
+      required this.image,
+      required this.address,
+      required this.state,
+      required this.zip,
+      required this.city});
 
   factory UserPostModel.fromMap(Map<String, dynamic> map) {
     return UserPostModel(
@@ -33,6 +42,7 @@ class UserPostModel{
       isic_num: map['isic_num'] as String,
       mobile: map['mobile'] as String,
       email: map['email'] as String,
+      matricule: map['matricule'] as String,
       username: map['username'] as String,
       countryCode: map['countryCode'] as String,
       country: map['country'] as String,

@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:viserpay/data/model/global/meassage_model.dart';
 
-UserCheckResponseModal userCheckResponseModalFromJson(String str) => UserCheckResponseModal.fromJson(json.decode(str));
+UserCheckResponseModal userCheckResponseModalFromJson(String str) =>
+    UserCheckResponseModal.fromJson(json.decode(str));
 
-String userCheckResponseModalToJson(UserCheckResponseModal data) => json.encode(data.toJson());
+String userCheckResponseModalToJson(UserCheckResponseModal data) =>
+    json.encode(data.toJson());
 
 class UserCheckResponseModal {
   String? remark;
@@ -19,10 +21,12 @@ class UserCheckResponseModal {
     this.data,
   });
 
-  factory UserCheckResponseModal.fromJson(Map<String, dynamic> json) => UserCheckResponseModal(
+  factory UserCheckResponseModal.fromJson(Map<String, dynamic> json) =>
+      UserCheckResponseModal(
         remark: json["remark"],
         status: json["status"].toString(),
-        message: json["message"] == null ? null : Message.fromJson(json["message"]),
+        message:
+            json["message"] == null ? null : Message.fromJson(json["message"]),
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
       );
 
@@ -56,6 +60,8 @@ class User {
   String? lastname;
   String? username;
   String? isicNum;
+  //ajout de matricule
+  String? matricule;
   String? email;
   String? countryCode;
   String? mobile;
@@ -83,6 +89,8 @@ class User {
     this.lastname,
     this.username,
     this.isicNum,
+    //ajout de matricule
+    this.matricule,
     this.email,
     this.countryCode,
     this.mobile,
@@ -110,6 +118,8 @@ class User {
         lastname: json["lastname"],
         username: json["username"],
         isicNum: json["isic_num"].toString(),
+        //ajout de matricule
+        matricule: json["matricule"],
         email: json["email"],
         countryCode: json["country_code"].toString(),
         mobile: json["mobile"].toString(),

@@ -59,10 +59,11 @@ class _CashoutSuccessScreenState extends State<CashoutSuccessScreen> {
           String date = DateConverter.localNumberdateOnly(modal.data?.cashout?.createdAt.toString() ?? "");
           String time = DateConverter.localTimeOnly(modal.data?.cashout?.createdAt.toString() ?? "");
           AppDialog().successDialog(
+            text: MyStrings.cashOut.tr,  
             details: {},
             context,
             onTap: () {},
-            title: MyStrings.receiveMoney.tr,
+            title: MyStrings.cashOut.tr,
             cashDetails: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(

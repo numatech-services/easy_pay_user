@@ -152,30 +152,37 @@ class ApiClient extends GetxService {
     getGSData();
   }
 
-  GeneralSettingResponseModel getGSData() {
+GeneralSettingResponseModel getGSData() {
     String pre = sharedPreferences.getString(SharedPreferenceHelper.generalSettingKey) ?? '';
-    try {
-    GeneralSettingResponseModel model = GeneralSettingResponseModel.fromJson(jsonDecode(pre));
-    return model;
-} catch (e) {
-    print('Erreur lors du décodage JSON: $e'); // Log de l'erreur
-    // Gérer l'erreur, par exemple en retournant un modèle par défaut ou en lançant une exception
-    throw Exception('Erreur lors du chargement des paramètres généraux');
+
+    if (pre.isEmpty) {
+      return GeneralSettingResponseModel(); // Retourne un objet par défaut au lieu de crasher
+    }
+
+    return GeneralSettingResponseModel.fromJson(jsonDecode(pre));
 }
 
-  }
 
-  String getCurrencyOrUsername({bool isCurrency = true, bool isSymbol = false}) {
-    if (isCurrency) {
-      String pre = sharedPreferences.getString(SharedPreferenceHelper.generalSettingKey) ?? '';
+String getCurrencyOrUsername({bool isCurrency = true, bool isSymbol = false}) {
+  if (isCurrency) {
+    String pre = sharedPreferences.getString(SharedPreferenceHelper.generalSettingKey) ?? '';
+    if (pre.isEmpty) return ''; // Ajout : éviter l'erreur si vide
+
+    try {
       GeneralSettingResponseModel model = GeneralSettingResponseModel.fromJson(jsonDecode(pre));
-      String currency = isSymbol ? model.data?.generalSetting?.curSym ?? '' : model.data?.generalSetting?.curText ?? '';
+      String currency = isSymbol
+          ? model.data?.generalSetting?.curSym ?? ''
+          : model.data?.generalSetting?.curText ?? '';
       return currency;
-    } else {
-      String username = sharedPreferences.getString(SharedPreferenceHelper.userNameKey) ?? '';
-      return username;
+    } catch (e) {
+      print("Erreur de décodage JSON: $e");
+      return '';
     }
+  } else {
+    String username = sharedPreferences.getString(SharedPreferenceHelper.userNameKey) ?? '';
+    return username;
   }
+}
 
   bool getPasswordStrengthStatus() {
     String pre = sharedPreferences.getString(SharedPreferenceHelper.generalSettingKey) ?? '';

@@ -66,8 +66,8 @@ class SendMoneyContrller extends GetxController {
 
 
   List<String> quickAmountList = [];
-  String currency = "";
-  String currencySym = "";
+  String currency = "tk";
+  String currencySym = "tk";
   bool isContactPermissonEnabled = false;
   void initialValue({bool onlyClear = false}) {
     page = 0;
@@ -124,13 +124,13 @@ class SendMoneyContrller extends GetxController {
     update();
   }
 
-  double mainAmount = 0;
+  int mainAmount = 0;
   String charge = "";
   String totalCharge = "";
   String payableText = '';
 
   void changeInfoWidget() async {
-    mainAmount = double.tryParse(amountController.text) ?? 0.0;
+    mainAmount =  int.parse(amountController.text) ;
     update();
     // double rate = double.tryParse(sen?.currency?.rate ?? "0") ?? 0;
     double percent = double.tryParse(sendMoneyCharge?.percentCharge ?? "3") ?? 3;
@@ -149,15 +149,15 @@ class SendMoneyContrller extends GetxController {
    
 
     if (statusFeeIncluded != null && statusFeeIncluded == true) {
-     double payable = mainAmount ;
+     int payable = mainAmount ;
       charge = StringConverter.formatNumber('$tempTotalCharge', precision: 2);
     // double payable = tempTotalCharge + mainAmount;
-    totalCharge = (mainAmount * percent / 100).toString();
+    totalCharge = mainAmount .toString();
     payableText = payableText.length > 5 ? StringConverter.roundDoubleAndRemoveTrailingZero(payable.toString()) : StringConverter.formatNumber(payable.toString());
     update();
     } else {
-      double percentCharge = mainAmount * 3 / 100;
-     double payable = mainAmount + percentCharge;
+      int percentCharge = mainAmount ;
+     int payable = mainAmount ;
       charge = StringConverter.formatNumber('$tempTotalCharge', precision: 2);
       
     // double payable = tempTotalCharge + mainAmount;
@@ -252,15 +252,15 @@ class SendMoneyContrller extends GetxController {
   Future<void> submitSendMoney() async {
     isLoading = true;
     update();
-    // print("amount-----------------$mainAmount");
-    // print("otpType-----------------$otpType");
-    //  print("usernameOrmobile-----------------${selectedContact?.number}");
-    //   print("usernameOrmobile-----------------$selectedMethod");
-    //   print("usernameOrmobile-----------------${numberController.text}");
-     bool? statusFeeIncluded = await MyUtils().loadFeeIncludedStatus();
- 
+
+    print("amount-----------------$type_payment");
+    print("otpType-----------------$otpType");
+     print("usernameOrmobile-----------------${selectedContact?.number}");
+      print("usernameOrmobile-----------------$selectedMethod");
+      print("usernameOrmobile-----------------${numberController.text}");
+      bool? statusFeeIncluded = await MyUtils().loadFeeIncludedStatus();
     ResponseModel responseModel = await sendMoneyRepo.sendMoney(
-      amount: mainAmount.toString(),
+      amount: amountController.text,
       otpType: selectedOtpType,
       statusFeeIncluded:statusFeeIncluded,
        type: type_payment,
@@ -350,7 +350,7 @@ class SendMoneyContrller extends GetxController {
 
         // Filtrer les données où remark == "send_money"
         List<LatestSendMoneyHistory> filteredData = (model.data?.history?.data ?? [])
-            .where((item) => item.remark == 'send_money')
+            .where((item) => item.remark == 'send_ticket')
             .toList();
 
         // Ajouter uniquement les données filtrées
@@ -386,7 +386,7 @@ Future<void> getReceiveMoneyHistory() async {
 
         // Filtrer les données où remark == "send_money"
         List<LatestSendMoneyHistory> filteredData = (model.data?.history?.data ?? [])
-            .where((item) => item.remark == 'receive_money')
+            .where((item) => item.remark == 'receive_ticket')
             .toList();
 
         // Ajouter uniquement les données filtrées

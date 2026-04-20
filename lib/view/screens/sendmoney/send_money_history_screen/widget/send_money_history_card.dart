@@ -74,7 +74,7 @@ class SendMoneyHistoryCard extends StatelessWidget {
                             ),
                           ] else ...[
                             Text(
-                              "Argent envoyé".replaceAll("_", " ").toTitleCase().tr,
+                              "Ticket envoyé".replaceAll("_", " ").toTitleCase().tr,
                               style: regularDefault.copyWith(color: MyColor.getTextColor(), fontWeight: FontWeight.w500),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -84,7 +84,7 @@ class SendMoneyHistoryCard extends StatelessWidget {
                           SizedBox(
                             width: 150,
                             child: Text(
-                              transaction.trx.toString(),
+                              transaction.ticketType.toString(),
                               style: regularSmall.copyWith(color: MyColor.getTextColor().withOpacity(0.5)),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
@@ -98,7 +98,7 @@ class SendMoneyHistoryCard extends StatelessWidget {
               ),
               Expanded(
                 child: CardColumn(
-                  header: "${transaction.trxType} $currencySym${StringConverter.formatNumber(transaction.amount.toString())}",
+                  header: "${transaction.trxType} $currencySym${transaction.nombreTicket.toString()}",
                   body: DateConverter.convertIsoToString(transaction.createdAt.toString()),
                   alignmentEnd: true,
                   headerTextStyle: boldDefault.copyWith(

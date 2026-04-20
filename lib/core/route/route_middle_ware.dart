@@ -8,22 +8,32 @@ import 'package:viserpay/push_notification_service.dart';
 
 class RouteMiddleWare {
   //
-  static Future<void> checkUserStatusAndGoToNextStep({GlobalUser? user, String accessToken = "", String tokenType = ""}) async {
+  static Future<void> checkUserStatusAndGoToNextStep(
+      {GlobalUser? user,
+      String accessToken = "",
+      String tokenType = ""}) async {
     bool needEmailVerification = user?.ev == "1" ? false : true;
     bool needSmsVerification = user?.sv == '1' ? false : true;
     // bool isTwoFactorEnable = user?.tv == '1' ? false : false;
     bool isProfileCompleteEnable = user?.profileComplete == '0' ? true : false;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString(SharedPreferenceHelper.userIdKey, user?.id.toString() ?? '-1');
-    await sharedPreferences.setString(SharedPreferenceHelper.userEmailKey, user?.email ?? '');
+    await sharedPreferences.setString(
+        SharedPreferenceHelper.userIdKey, user?.id.toString() ?? '-1');
+    await sharedPreferences.setString(
+        SharedPreferenceHelper.userEmailKey, user?.email ?? '');
     await sharedPreferences.setString("mobile", user?.mobile ?? '');
-    await sharedPreferences.setString(SharedPreferenceHelper.userNameKey, user?.username ?? '');
-     await sharedPreferences.setString(SharedPreferenceHelper.isic_num, user?.isic_num ?? '');
-      await sharedPreferences.setString(SharedPreferenceHelper.matricule, user?.matricule ?? '');
+    await sharedPreferences.setString(
+        SharedPreferenceHelper.userNameKey, user?.username ?? '');
+    await sharedPreferences.setString(
+        SharedPreferenceHelper.isic_num, user?.isic_num ?? '');
+    await sharedPreferences.setString(
+        SharedPreferenceHelper.matricule, user?.matricule ?? '');
 
     if (accessToken.isNotEmpty) {
-      await sharedPreferences.setString(SharedPreferenceHelper.accessTokenKey, accessToken);
-      await sharedPreferences.setString(SharedPreferenceHelper.accessTokenType, tokenType);
+      await sharedPreferences.setString(
+          SharedPreferenceHelper.accessTokenKey, accessToken);
+      await sharedPreferences.setString(
+          SharedPreferenceHelper.accessTokenType, tokenType);
     }
 
     if (isProfileCompleteEnable) {

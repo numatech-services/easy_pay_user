@@ -45,28 +45,13 @@ class TransactionHistoryBottomSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CardColumn(header: MyStrings.amount.tr, body: "${controller.currencySym}${StringConverter.formatNumber(controller.transactionList[index].beforeCharge ?? "")} "),
-              CardColumn(
-                header: MyStrings.charge.tr,
-                body: "${controller.currencySym}${StringConverter.formatNumber(controller.transactionList[index].charge ?? "")}",
-                alignmentEnd: true,
-              ),
-            ],
-          ),
-          const SizedBox(height: Dimensions.space15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CardColumn(header: MyStrings.finalAmount.tr, body: "${controller.currencySym}${StringConverter.formatNumber(controller.transactionList[index].amount ?? "")} "),
-              CardColumn(
-                header: MyStrings.remainingBalance.tr,
-                body: "${controller.currencySym}${StringConverter.formatNumber(controller.transactionList[index].postBalance ?? "")}",
-                alignmentEnd: true,
-              ),
-            ],
-          ),
-          const SizedBox(height: Dimensions.space15),
-          controller.transactionList[index].remark!.contains("mobile")
+              CardColumn(header: MyStrings.amount.tr, body: "${StringConverter.formatNumber(controller.transactionList[index].beforeCharge ?? "")} "),
+              // CardColumn(
+              //   header: MyStrings.charge.tr,
+              //   body: "${controller.currencySym}${StringConverter.formatNumber(controller.transactionList[index].charge ?? "")}",
+              //   alignmentEnd: true,
+              // ),
+               controller.transactionList[index].remark!.contains("mobile")
               ? CardColumn(
                   header: MyStrings.details.tr,
                   body: controller.transactionList[index].mobileRecharge?.adminFeedback ?? "--",
@@ -89,6 +74,23 @@ class TransactionHistoryBottomSheet extends StatelessWidget {
                           body: controller.transactionList[index].details ?? "",
                           bodyMaxLine: 80,
                         ),
+            ],
+          ),
+          
+           const SizedBox(height: Dimensions.space15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CardColumn(header: MyStrings.finalAmount.tr, body: "cfa${StringConverter.formatNumber(controller.transactionList[index].amount ?? "")} "),
+              CardColumn(
+                header: "Ticket Restant",
+                body: "${controller.currencySym}${controller.transactionList[index].postBalance ?? ""}",
+                alignmentEnd: true,
+              ),
+            ],
+          ),
+          const SizedBox(height: Dimensions.space15),
+         
         ],
       ),
     );

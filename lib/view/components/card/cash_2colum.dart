@@ -52,13 +52,13 @@ class CashDetailsColumn extends StatelessWidget {
         children: [
           Expanded(
             child: CardColumn(
-              header: firstTitle?.tr ?? MyStrings.total.tr,
+              header: firstTitle?.tr ?? "Total Tickets Envoyés",  
               body: total,
               bodyTextStyle: totalStyle ??
                   boldDefault.copyWith(
                     fontSize: Dimensions.fontMediumLarge - 1,
                   ),
-              subBody: hideCharge ? '' : '$charge',
+              // subBody: hideCharge ? '' : '$charge',
               space: space,
               bodyMaxLine: chargeMaxLine,
             ),
@@ -74,7 +74,7 @@ class CashDetailsColumn extends StatelessWidget {
             child: Align(
               alignment: Alignment.topRight,
               child: CardColumn(
-                header: secondTitle?.tr ?? MyStrings.newBalance.tr,
+                header:  "Tickets Restant",
                 body: newBalance,
                 bodyTextStyle: newBalanceStyle ?? boldMediumLarge,
                 space: space,

@@ -124,7 +124,7 @@ PreferredSize homeScreenAppBar(BuildContext context, HomeController controller, 
                                 },
                                 child: Obx(
                                   () => Container(
-                                    width: 175,
+                                    width: 180,
                                     height: 28,
                                     decoration: BoxDecoration(
                                       // color: MyColor.transparentColor,
@@ -138,7 +138,7 @@ PreferredSize homeScreenAppBar(BuildContext context, HomeController controller, 
                                                                           opacity: controller.isBalanceShown.value ? 1 : 0,
                                                                           duration: const Duration(milliseconds: 500),
                                                                           child: Text(
-                                      MyUtils().formatAmount(double.tryParse(controller.userBalance) ?? 0.0),
+                                      controller.userBalance ,
                                       style: const TextStyle(color: MyColor.primaryColor, fontSize: Dimensions.fontLarge),
                                                                           ),
                                                                         ),

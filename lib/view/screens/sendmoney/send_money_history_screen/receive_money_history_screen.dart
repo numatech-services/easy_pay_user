@@ -70,7 +70,7 @@ class _ReceiveMoneyHistoryScreenState extends State<ReceiveMoneyHistoryScreen> {
           child: Scaffold(
             backgroundColor: MyColor.screenBgColor,
             appBar: CustomAppBar(
-              title: "Argents reçu",
+              title: "Tickets reçu",
               isTitleCenter: true,
             ),
             body: Padding(

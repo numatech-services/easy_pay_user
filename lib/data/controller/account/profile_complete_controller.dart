@@ -48,9 +48,11 @@ class ProfileCompleteController extends GetxController {
       firstname: '',
       lastName: '',
       mobile: '',
-       isic_num: '',
+      isic_num: '',
       email: '',
       username: username,
+      //ajout de matricule
+      matricule: '',
       countryCode: '',
       country: '',
       mobileCode: '',
@@ -62,11 +64,13 @@ class ProfileCompleteController extends GetxController {
 
     ResponseModel responseModel = await profileRepo.completeProfile(model);
     if (responseModel.statusCode == 200) {
-      AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(jsonDecode(responseModel.responseJson));
+      AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(
+          jsonDecode(responseModel.responseJson));
       if (model.status?.toLowerCase() == "success") {
         RouteMiddleWare.checkUserStatusAndGoToNextStep(user: model.data?.user);
       } else {
-        CustomSnackBar.error(errorList: model.message?.error ?? [MyStrings.somethingWentWrong]);
+        CustomSnackBar.error(
+            errorList: model.message?.error ?? [MyStrings.somethingWentWrong]);
       }
     } else {
       CustomSnackBar.error(errorList: [responseModel.message]);

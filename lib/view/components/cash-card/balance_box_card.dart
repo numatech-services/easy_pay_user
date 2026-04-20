@@ -28,8 +28,8 @@ class BalanceBoxCard extends StatefulWidget {
 }
 
 class _BalanceBoxCardState extends State<BalanceBoxCard> {
-  String balance = "0.0";
-  String currency = "";
+  String balance = "0";
+  String currency = "tk";
   @override
   void initState() {
     final apiclient = Get.put(ApiClient(sharedPreferences: Get.find()));
@@ -76,7 +76,7 @@ class _BalanceBoxCardState extends State<BalanceBoxCard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        currency,
+                        "TK",
                         style: heading.copyWith(
                           fontSize: Dimensions.fontBalance,
                           color: widget.textEditingController.text.isNotEmpty ? MyColor.primaryColor : Colors.grey.shade500,
@@ -93,7 +93,7 @@ class _BalanceBoxCardState extends State<BalanceBoxCard> {
                               inputFormatters: [LengthLimitingTextInputFormatter(8)],
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: widget.focusNode.hasFocus ? "0" : "0.00",
+                                hintText: widget.focusNode.hasFocus ? "0" : "0",
                                 hintStyle: heading.copyWith(
                                   fontSize: Dimensions.fontBalance,
                                   color: widget.textEditingController.text.isNotEmpty ? MyColor.primaryColor : Colors.grey.shade500,
@@ -122,11 +122,11 @@ class _BalanceBoxCardState extends State<BalanceBoxCard> {
                     ),
                 RichText(
                   text: TextSpan(
-                    text: "${MyStrings.availableBalance.tr}: ",
+                    text: "Tickets Disponibles: ",
                     children: [
-                      TextSpan(text: "$currency${MyUtils().formatAmount(double.parse(balance))} ", style: regularDefault),
+                      TextSpan(text: "tk${balance} ", style: boldMediumLarge),
                     ],
-                    style: boldDefault,
+                    style: boldMediumLarge,
                   ),
                 ),
               ],

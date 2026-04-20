@@ -97,11 +97,11 @@ class _CashOutScreenState extends State<CashOutScreen> {
                               isShowSuffixIcon: true,
                               textInputType: TextInputType.numberWithOptions(decimal: true),
                               onSubmit: ()async {
-                                  double currntBalance = NumberFormat.decimalPattern().parse(controller.currentBalance).toDouble();
+                                  int currntBalance = int.parse(controller.currentBalance);
                                 if (controller.amountController.text.trim().isNotEmpty) {
                                   bool isValid = await MyUtils().balanceValidation(
                                     currentBalance: currntBalance,
-                                    amount: double.tryParse(controller.amountController.text) ?? 0,
+                                    amount: int.tryParse(controller.amountController.text) ?? 0,
                                   );
             
                                   if (isValid) {
@@ -113,11 +113,11 @@ class _CashOutScreenState extends State<CashOutScreen> {
                               },
                               suffixWidget: GestureDetector(
                                 onTap: () async {
-                                   double currntBalance = NumberFormat.decimalPattern().parse(controller.currentBalance).toDouble();
+                                   int currntBalance = int.parse(controller.currentBalance);
                                 if (controller.amountController.text.trim().isNotEmpty) {
                                   bool isValid = await MyUtils().balanceValidation(
                                     currentBalance: currntBalance,
-                                    amount: double.tryParse(controller.amountController.text) ?? 0,
+                                    amount: int.tryParse(controller.amountController.text) ?? 0,
                                   );
             
                                   if (isValid) {

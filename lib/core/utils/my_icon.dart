@@ -27,6 +27,7 @@ class MyIcon {
   static const String user = "assets/icon/user.svg";
   static const String operator = "assets/icon/operator.svg";
   static const String history = "assets/icon/history.svg";
+  static const String cashback = "assets/icon/cash-back.svg";
   static const String bottomHistory = "assets/icon/history.svg";
   static const String bottomHome = "assets/icon/home.svg";
   static const String addMoney = "assets/icon/add_money.svg";

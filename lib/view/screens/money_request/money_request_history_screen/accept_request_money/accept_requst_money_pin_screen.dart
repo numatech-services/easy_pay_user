@@ -122,9 +122,9 @@ class _AcceptRequstMoneyPinScreenState extends State<AcceptRequstMoneyPinScreen>
                         ),
                         const SizedBox(height: Dimensions.space16),
                         AccountDetailsCard(
-                          amount: '${controller.currencySym}${StringConverter.minus(StringConverter.formatNumber(controller.requestToMe.requestAmount.toString()), StringConverter.formatNumber(controller.requestToMe.charge.toString()))}',
-                          charge: '${controller.currencySym}${StringConverter.formatNumber(controller.requestToMe.charge.toString())}',
-                          total: '${controller.currencySym}${StringConverter.sum(StringConverter.minus(StringConverter.formatNumber(controller.requestToMe.requestAmount.toString()), StringConverter.formatNumber(controller.requestToMe.charge.toString())), StringConverter.formatNumber(controller.requestToMe.charge.toString()))}',
+                          amount: 'tk${controller.requestToMe.requestAmount.toString()}',
+                          charge: 'tk${StringConverter.formatNumber(controller.requestToMe.charge.toString())}',
+                          total: 'tk${controller.requestToMe.requestAmount.toString()}',
                         ),
                         const SizedBox(height: Dimensions.space20),
                         if (controller.otpType.isNotEmpty) ...[
@@ -189,17 +189,17 @@ class _AcceptRequstMoneyPinScreenState extends State<AcceptRequstMoneyPinScreen>
                           ),
                           suffixWidget: GestureDetector(
                             onTap: () {
-                              String newBalance = StringConverter.minus(controller.currentBalance, StringConverter.formatNumber(controller.requestToMe.requestAmount.toString()));
+                            int newBalance = int.parse(controller.currentBalance) - int.parse(controller.requestToMe.requestAmount.toString());
                               if (controller.otpType.isEmpty) {
                                 if (controller.validatePinCode()) {
-                                  submitDialog(context, controller, newBalance);
+                                  submitDialog(context, controller, newBalance.toString());
                                 }
                               } else {
                                 if (controller.validatePinCode() == true) {
                                   if (controller.selectedOtpType == 'null' || controller.selectedOtpType == "-1") {
                                     CustomSnackBar.error(errorList: [MyStrings.pleaseSelectOtp.tr]);
                                   } else {
-                                    submitDialog(context, controller, newBalance);
+                                    submitDialog(context, controller, newBalance.toString());
                                   }
                                 }
                               }
@@ -217,19 +217,19 @@ class _AcceptRequstMoneyPinScreenState extends State<AcceptRequstMoneyPinScreen>
                             ),
                           ),
                           onSubmit: () {
-                            String newBalance = StringConverter.minus(controller.currentBalance, StringConverter.formatNumber(controller.requestToMe.requestAmount.toString()));
+                            int newBalance = int.parse(controller.currentBalance) - int.parse(controller.requestToMe.requestAmount.toString());
                             printx('newBalance $newBalance');
                             printx('newBalance ${controller.selectedOtpType}');
                             if (controller.otpType.isEmpty) {
                               if (controller.validatePinCode()) {
-                                submitDialog(context, controller, newBalance);
+                                submitDialog(context, controller, newBalance.toString());
                               }
                             } else {
                               if (controller.validatePinCode() == true) {
                                 if (controller.selectedOtpType == 'null' || controller.selectedOtpType == "-1") {
                                   CustomSnackBar.error(errorList: [MyStrings.pleaseSelectOtp.tr]);
                                 } else {
-                                  submitDialog(context, controller, newBalance);
+                                  submitDialog(context, controller, newBalance.toString());
                                 }
                               }
                             }
@@ -254,9 +254,9 @@ class _AcceptRequstMoneyPinScreenState extends State<AcceptRequstMoneyPinScreen>
       ),
       cashDetails: CashDetailsColumn(
         secondTitle: MyStrings.newBalance,
-        total: '${controller.currencySym}${StringConverter.formatNumber(controller.requestToMe.requestAmount.toString())}',
-        newBalance: controller.currencySym + newBalance,
-        charge: MyUtils.getChargeText("${controller.currencySym}${StringConverter.formatNumber(controller.requestToMe.charge.toString())}"),
+        total: 'tk${controller.requestToMe.requestAmount.toString()}',
+        newBalance: "tk" + newBalance,
+        charge: MyUtils.getChargeText("tk${controller.requestToMe.charge.toString()}"),
       ),
       onfinish: () {},
       onwaiting: () {

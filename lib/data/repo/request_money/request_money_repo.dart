@@ -60,6 +60,7 @@ class RequestMoneyRepo {
     required String username,
     required String msg,
     required String pin,
+     required String typeTicket,
   }) async {
     String url = "${UrlContainer.baseUrl}${UrlContainer.requestMoneySubmitEndPoint}";
     Map<String, String> params = {
@@ -67,6 +68,7 @@ class RequestMoneyRepo {
       "user": username.replaceAll('+', '').trim(),
       "note": msg,
       'pin': pin,
+      'ticketType': typeTicket,
     };
 
     ResponseModel responseModel = await apiClient.request(url, Method.postMethod, params, passHeader: true);

@@ -69,7 +69,7 @@ class RequestToMeCard extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "${StringConverter.formatNumber(requestData.requestAmount ?? '0')} $currencySym",
+                        "${requestData.requestAmount ?? '0'} $currencySym",
                         style: boldExtraLarge.copyWith(color: MyColor.primaryColor),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -103,8 +103,8 @@ class RequestToMeCard extends StatelessWidget {
                       press: () async {
                         controller.clearOtpType();
 
-                        double balance = double.tryParse(controller.currentBalance) ?? 0;
-                        double amount = double.tryParse(requestData.requestAmount.toString()) ?? 0;
+                        int balance = int.tryParse(controller.currentBalance) ?? 0;
+                        int amount = int.tryParse(requestData.requestAmount.toString()) ?? 0;
 
                         // Attendre le résultat de balanceValidation
                         bool isValid = await MyUtils().balanceValidation(

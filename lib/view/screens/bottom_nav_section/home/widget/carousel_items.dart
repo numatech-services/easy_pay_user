@@ -16,7 +16,7 @@ class CarouselItems extends StatefulWidget {
 }
 
 class _CarouselItemsState extends State<CarouselItems> {
-  int currentIndex = 0;
+  double currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,9 @@ class _CarouselItemsState extends State<CarouselItems> {
                 (index) => GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
-                    Get.toNamed(RouteHelper.mywebViewScreen, arguments: controller.appBanners[index].dataValues?.link.toString());
+                    Get.toNamed(RouteHelper.mywebViewScreen,
+                        arguments: controller.appBanners[index].dataValues?.link
+                            .toString());
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
@@ -47,18 +49,18 @@ class _CarouselItemsState extends State<CarouselItems> {
                   ),
                 ),
               ),
-                options: CarouselOptions(
-                // autoPlay: true,                      
-                autoPlayInterval: const Duration(seconds: 3),  
-                autoPlayAnimationDuration: const Duration(milliseconds: 800), 
-                autoPlayCurve: Curves.fastOutSlowIn,  
+              options: CarouselOptions(
+                // autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
                 viewportFraction: 1,
                 height: height,
                 enableInfiniteScroll: true,
                 enlargeCenterPage: true,
                 onPageChanged: (index, reason) {
                   setState(() {
-                    currentIndex = index;
+                    currentIndex = index.toDouble();
                   });
                 },
               ),

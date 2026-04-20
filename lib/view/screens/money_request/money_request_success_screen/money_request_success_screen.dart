@@ -59,6 +59,7 @@ class _MoneyRequestSuccessScreenState extends State<MoneyRequestSuccessScreen> {
           String date = DateConverter.localNumberdateOnly(modal.data?.sendMoney?.createdAt.toString() ?? "");
           String time = DateConverter.localTimeOnly(modal.data?.sendMoney?.createdAt.toString() ?? "");
           AppDialog().successDialog(
+            text: "Votre demande d'argent",
             details: {},
             context,
             willPop: false,

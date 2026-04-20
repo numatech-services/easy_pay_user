@@ -13,7 +13,7 @@ class MainItemSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (controller) {
-        final list = MyUtils.makeSloteWidget(widgets: controller.moduleList, showMoreWidget: controller.moduleList.length < 8 ? true : (controller.moduleList.length <= 8 ? true : controller.showMoreWidget));
+        final list = MyUtils.makeSloteWidget(widgets: controller.moduleList, showMoreWidget: controller.moduleList.length < 4 ? true : (controller.moduleList.length <= 4 ? true : controller.showMoreWidget));
         return Stack(
           children: [
             AnimatedContainer(
@@ -27,9 +27,9 @@ class MainItemSection extends StatelessWidget {
                 children: List.generate(list.length, (index) => list[index]),
               ),
             ),
-            if (controller.moduleList.length > 8) ...[
+            if (controller.moduleList.length > 4) ...[
               Positioned(
-                bottom: 0,
+                bottom:0,
                 right: 0,
                 left: 0,
                 child: Container(
@@ -61,39 +61,39 @@ class MainItemSection extends StatelessWidget {
                       bottomRight: Radius.circular(Dimensions.cardRadius),
                     ),
                   ),
-                  // child: Align(
-                  //   alignment: Alignment.bottomCenter,
-                  //   child: InkWell(
-                  //     onTap: () {
-                  //       controller.changeShowMoreWidgetState();
-                  //     },
-                  //     splashFactory: NoSplash.splashFactory,
-                  //     customBorder: const CircleBorder(),
-                  //     child: Container(
-                  //       margin: const EdgeInsets.only(bottom: Dimensions.space10),
-                  //       decoration: const BoxDecoration(
-                  //         shape: BoxShape.circle,
-                  //         color: MyColor.colorWhite,
-                  //       ),
-                  //       child: !controller.showMoreWidget
-                  //           ? Icon(
-                  //               Icons.keyboard_arrow_down_rounded,
-                  //               color: MyColor.getPrimaryColor(),
-                  //               size: Dimensions.space30,
-                  //             )
-                  //               .animate(
-                  //                 onPlay: (controller) => controller.repeat(),
-                  //                 delay: 600.ms,
-                  //               )
-                  //               .moveY(begin: -2, end: 3, duration: 1000.ms)
-                  //           : Icon(
-                  //               Icons.keyboard_arrow_up_rounded,
-                  //               color: MyColor.getPrimaryColor(),
-                  //               size: Dimensions.space30,
-                  //             ),
-                  //     ),
-                  //   ),
-                  // ),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: InkWell(
+                      onTap: () {
+                        controller.changeShowMoreWidgetState();
+                      },
+                      splashFactory: NoSplash.splashFactory,
+                      customBorder: const CircleBorder(),
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: Dimensions.space10),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: MyColor.colorWhite,
+                        ),
+                        child: !controller.showMoreWidget
+                            ? Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color: MyColor.getPrimaryColor(),
+                                size: Dimensions.space30,
+                              )
+                                .animate(
+                                  onPlay: (controller) => controller.repeat(),
+                                  delay: 600.ms,
+                                )
+                                .moveY(begin: -2, end: 3, duration: 1000.ms)
+                            : Icon(
+                                Icons.keyboard_arrow_up_rounded,
+                                color: MyColor.getPrimaryColor(),
+                                size: Dimensions.space30,
+                              ),
+                      ),
+                    ),
+                  ),
                 ),
               )
             ]

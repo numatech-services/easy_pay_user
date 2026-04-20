@@ -9,6 +9,7 @@ import 'package:viserpay/core/utils/my_icon.dart';
 import 'package:viserpay/core/utils/my_strings.dart';
 import 'package:viserpay/core/utils/style.dart';
 import 'package:viserpay/core/utils/user_inactivity.dart';
+import 'package:viserpay/core/utils/util.dart';
 import 'package:viserpay/data/controller/money_request/money_request_controller.dart';
 import 'package:viserpay/data/model/contact/user_contact_model.dart';
 import 'package:viserpay/data/repo/request_money/request_money_repo.dart';
@@ -24,12 +25,14 @@ import 'package:viserpay/view/components/snack_bar/show_custom_snackbar.dart';
 class MoneyRequestAmountScreen extends StatefulWidget {
   const MoneyRequestAmountScreen({super.key});
   
-  @override
+  @override 
   State<MoneyRequestAmountScreen> createState() => _MoneyRequestAmountScreenState();
 }
 
 class _MoneyRequestAmountScreenState extends State<MoneyRequestAmountScreen> {
      final InActivityTimer timer = InActivityTimer();
+     List<String> ticketTypes = ['Petit Déjeuner', 'Déjeuner', 'Dîner', 'Transport'];
+String? selectedTicketType;
   @override
   void initState() {
     String? username = Get.arguments != null ? Get.arguments[0] : null;
@@ -121,7 +124,7 @@ class _MoneyRequestAmountScreenState extends State<MoneyRequestAmountScreen> {
                           const SizedBox(
                             height: Dimensions.space16,
                           ),
-                          SingleChildScrollView(
+                                   SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center, 
@@ -139,21 +142,44 @@ class _MoneyRequestAmountScreenState extends State<MoneyRequestAmountScreen> {
                                 ),
                               ),
                               child: TextField(
-                                controller: controller.amountController,
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center, // Centre le texte dans le champ
-                                decoration: const InputDecoration(
-                                  hintText: "Entrez le montant",
-                                  border: InputBorder.none,
-                                ),
-                                onChanged: (value) {
-                                  controller.amountController.text = value;
-                                },
+                              controller: controller.amountController,
+                              keyboardType: TextInputType.numberWithOptions(decimal: true),
+                              textAlign: TextAlign.center, // Centre le texte dans le champ
+                              decoration: const InputDecoration(
+                                hintText: "Nombre de tickets",
+                                border: InputBorder.none,
                               ),
+                              onChanged: (value) {
+                                MyUtils().validateAndUpdateAmount(controller.amountController, value);
+                              },
+                            ),
+        
                             ),
                           ],
                         ),
                       ),
+                     const SizedBox(height: 20), 
+                     DropdownButtonFormField<String>(
+  decoration: const InputDecoration(
+    labelText: 'Type de ticket',
+    border: OutlineInputBorder(),
+    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+  ),
+  value: selectedTicketType,
+  onChanged: (value) {
+    setState(() {
+      selectedTicketType = value;
+      controller.type_payment = value ?? '';
+    });
+  },
+  items: ticketTypes.map((type) {
+    return DropdownMenuItem<String>(
+      value: type,
+      child: Text(type),
+    );
+  }).toList(),
+)
+
                         ],
                       ),
                     ),

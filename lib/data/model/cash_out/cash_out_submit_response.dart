@@ -111,7 +111,7 @@ class Cashout {
         updatedAt: json["updated_at"],
         createdAt: json["created_at"],
         id: json["id"].toString(),
-        receiverUser: json["receiver_agent"] == null ? null : User.fromJson(json["receiver_agent"]),
+        receiverUser: json["receiver_user"] == null ? null : User.fromJson(json["receiver_user"]),
       );
 
   Map<String, dynamic> toJson() => {

@@ -141,9 +141,9 @@ class _MoneyRequestPinScreenState extends State<MoneyRequestPinScreen> {
                             ),
                             const SizedBox(height: Dimensions.space16),
                             AccountDetailsCard(
-                              amount: controller.currencySym + controller.mainAmount.toString(),
-                              charge: controller.currencySym + controller.charge,
-                              total: controller.currencySym + controller.payableText.toString(),
+                              amount: "tk" + controller.mainAmount.toString(),
+                              charge: "tk" + controller.charge,
+                              total: "tk" + controller.mainAmount.toString(),
                               totalTitle: MyStrings.willGet,
                             ),
                             const SizedBox(height: Dimensions.space20),
@@ -242,7 +242,7 @@ class _MoneyRequestPinScreenState extends State<MoneyRequestPinScreen> {
           CashDetailsColumn(
             secondTitle: '',
             hideBorder: true,
-            total: controller.currencySym + controller.mainAmount.toString(),
+            total: "tk" + controller.mainAmount.toString(),
             newBalance: '', //controller.currencySym + newBalance,
             charge: MyUtils.getChargeText("${controller.currencySym}${controller.charge}"),
           ),

@@ -14,7 +14,11 @@ class LatestTransactionCard extends StatelessWidget {
   final int index;
   final VoidCallback press;
   LatestTransaction transaction;
-  LatestTransactionCard({super.key, required this.index, required this.press, required this.transaction});
+  LatestTransactionCard(
+      {super.key,
+      required this.index,
+      required this.press,
+      required this.transaction});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,8 @@ class LatestTransactionCard extends StatelessWidget {
         onTap: press,
         child: Container(
           width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(vertical: Dimensions.space15, horizontal: Dimensions.space10),
+          padding: const EdgeInsets.symmetric(
+              vertical: Dimensions.space15, horizontal: Dimensions.space10),
           decoration: BoxDecoration(
             color: MyColor.getCardBgColor(),
           ),
@@ -38,21 +43,29 @@ class LatestTransactionCard extends StatelessWidget {
                       height: 35,
                       width: 35,
                       alignment: Alignment.center,
-                      child: transaction.receiverType?.toLowerCase() == "USER".toLowerCase()
+                      child: transaction.receiverType?.toLowerCase() ==
+                              "USER".toLowerCase()
                           ? MyImageWidget(
-                              imageUrl: '${transaction.trxType == "-" ? transaction.receiverUser?.getImage : transaction.relatedTransaction?.user?.getImage}',
+                              imageUrl:
+                                  '${transaction.trxType == "-" ? transaction.receiverUser?.getImage : transaction.relatedTransaction?.user?.getImage}',
                               radius: 50,
                               isProfile: true,
                             )
-                          : transaction.receiverType?.toLowerCase() == "MERCHANT".toLowerCase()
+                          : transaction.receiverType?.toLowerCase() ==
+                                  "MERCHANT".toLowerCase()
                               ? MyImageWidget(
-                                  imageUrl: transaction.receiverMerchant?.getimage ?? "",
+                                  imageUrl:
+                                      transaction.receiverMerchant?.getimage ??
+                                          "",
                                   radius: 50,
                                   isProfile: true,
                                 )
-                              : transaction.receiverType?.toLowerCase() == "AGENT".toLowerCase()
+                              : transaction.receiverType?.toLowerCase() ==
+                                      "AGENT".toLowerCase()
                                   ? MyImageWidget(
-                                      imageUrl: transaction.receiverAgent?.getimage ?? "",
+                                      imageUrl:
+                                          transaction.receiverAgent?.getimage ??
+                                              "",
                                       radius: 50,
                                       isProfile: true,
                                     )
@@ -60,12 +73,19 @@ class LatestTransactionCard extends StatelessWidget {
                                       height: 35,
                                       width: 35,
                                       decoration: BoxDecoration(
-                                        color: transaction.trxType == "-" ? MyColor.colorRed.withOpacity(0.2) : MyColor.colorGreen.withOpacity(0.2),
+                                        color: transaction.trxType == "-"
+                                            ? MyColor.colorRed.withOpacity(0.2)
+                                            : MyColor.colorGreen
+                                                .withOpacity(0.2),
                                         shape: BoxShape.circle,
                                       ),
                                       child: Icon(
-                                        transaction.trxType == "-" ? Icons.arrow_upward : Icons.arrow_downward,
-                                        color: transaction.trxType == "-" ? MyColor.colorRed : MyColor.colorGreen,
+                                        transaction.trxType == "-"
+                                            ? Icons.arrow_upward
+                                            : Icons.arrow_downward,
+                                        color: transaction.trxType == "-"
+                                            ? MyColor.colorRed
+                                            : MyColor.colorGreen,
                                         size: 20,
                                       ),
                                     ),
@@ -74,19 +94,33 @@ class LatestTransactionCard extends StatelessWidget {
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children:  [
-                          if (controller.homeRepo.apiClient.getCurrencyOrUsername(isCurrency: false, isSymbol: false).toLowerCase() == transaction.receiverUser?.username?.toLowerCase()) ...[
-                           
+                        children: [
+                          if (controller.homeRepo.apiClient
+                                  .getCurrencyOrUsername(
+                                      isCurrency: false, isSymbol: false)
+                                  .toLowerCase() ==
+                              transaction.receiverUser?.username
+                                  ?.toLowerCase()) ...[
                             Text(
-                              "${transaction.payment_type}".replaceAll("_", " ").toTitleCase().tr,
-                              style: regularDefault.copyWith(color: MyColor.getTextColor(), fontWeight: FontWeight.w500),
+                              "Ticket ${transaction.payment_type}"
+                                  .replaceAll("_", " ")
+                                  .toTitleCase()
+                                  .tr,
+                              style: regularDefault.copyWith(
+                                  color: MyColor.getTextColor(),
+                                  fontWeight: FontWeight.w500),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                          ] else ...[ 
+                          ] else ...[
                             Text(
-                              "${transaction.payment_type}".replaceAll("_", " ").toTitleCase().tr,
-                              style: regularDefault.copyWith(color: MyColor.getTextColor(), fontWeight: FontWeight.w500),
+                              "Ticket ${transaction.payment_type}"
+                                  .replaceAll("_", " ")
+                                  .toTitleCase()
+                                  .tr,
+                              style: regularDefault.copyWith(
+                                  color: MyColor.getTextColor(),
+                                  fontWeight: FontWeight.w500),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -96,7 +130,9 @@ class LatestTransactionCard extends StatelessWidget {
                             width: 150,
                             child: Text(
                               transaction.details.toString(),
-                              style: regularSmall.copyWith(color: MyColor.getTextColor().withOpacity(0.5)),
+                              style: regularSmall.copyWith(
+                                  color:
+                                      MyColor.getTextColor().withOpacity(0.5)),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                             ),
@@ -109,15 +145,21 @@ class LatestTransactionCard extends StatelessWidget {
               ),
               Expanded(
                 child: CardColumn(
-                  header: "${transaction.trxType}${controller.defaultCurrencySymbol}${StringConverter.formatNumber(transaction.amount.toString())}",
-                  body: DateConverter.convertIsoToString(transaction.createdAt.toString()),
+                  header:
+                      "${transaction.trxType}${controller.defaultCurrencySymbol}${transaction.ticketNumber}",
+                  body: DateConverter.convertIsoToString(
+                      transaction.createdAt.toString()),
                   alignmentEnd: true,
                   headerTextStyle: boldDefault.copyWith(
-                    color: transaction.trxType == "-" ? MyColor.colorRed : MyColor.colorGreen,
+                    color: transaction.trxType == "-"
+                        ? MyColor.colorRed
+                        : MyColor.colorGreen,
                     fontSize: Dimensions.fontMediumLarge - 1,
                     fontWeight: FontWeight.w500,
                   ),
-                  bodyTextStyle: lightMediumLarge.copyWith(color: MyColor.getGreyText(), fontSize: Dimensions.fontDefault - 1),
+                  bodyTextStyle: lightMediumLarge.copyWith(
+                      color: MyColor.getGreyText(),
+                      fontSize: Dimensions.fontDefault - 1),
                 ),
               )
             ],

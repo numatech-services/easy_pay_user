@@ -173,7 +173,7 @@ class AppDialog {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Ton envoi d'argent",
+                                      MyStrings.your.tr,
                                       style: regularMediumLarge.copyWith(
                                           // fontSize: Dimensions.fontExtraLarge+1,
                                           ),
@@ -185,7 +185,7 @@ class AppDialog {
                                     ),
                                     RichText(
                                       text: TextSpan(
-                                        text: " ${text ?? MyStrings.is_.tr} ",
+                                        text: " ${text } est ",
                                         children: [
                                           TextSpan(
                                             text: MyStrings.successfully.tr,

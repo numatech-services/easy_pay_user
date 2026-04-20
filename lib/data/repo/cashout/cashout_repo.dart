@@ -42,6 +42,19 @@ class CashoutRepo {
     return responseModel;
   }
 
+    Future<ResponseModel> cashoutCanceling({
+    required String idTrans,
+  }) async {
+    String url = '${UrlContainer.baseUrl}${UrlContainer.cashOutCancelEndpoint}';
+    Map<String, String> params = {
+      'idTrans': idTrans,
+    };
+    log(params.toString());
+    final responseModel = await apiClient.request(url, Method.postMethod, params, passHeader: true);
+    return responseModel;
+  }
+
+
   Future<ResponseModel> history({required String page}) async {
     String url = '${UrlContainer.baseUrl}${UrlContainer.cashOutEndpoint}/history?page=$page';
 

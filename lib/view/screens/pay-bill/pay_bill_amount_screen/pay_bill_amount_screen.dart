@@ -89,13 +89,13 @@ class _PaybillAmountScreenState extends State<PaybillAmountScreen> {
   focusNode: controller.amountFocusNode,
   textEditingController: controller.amountController,
   onpress: () async {
-    double currntBalance = NumberFormat.decimalPattern().parse(controller.currentBalance).toDouble();
+    int currntBalance = int.parse(controller.currentBalance);
 
     if (controller.amountController.text.trim().isNotEmpty) {
       // Appeler balanceValidation de manière asynchrone
       bool isValid = await MyUtils().balanceValidation(
         currentBalance: currntBalance,
-        amount: double.tryParse(controller.amountController.text) ?? 0,
+        amount: int.tryParse(controller.amountController.text) ?? 0,
       );
 
       if (isValid) {

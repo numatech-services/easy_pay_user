@@ -29,7 +29,7 @@ import 'package:viserpay/view/components/dialog/app_dialog.dart';
 
 class SendMoneySuccessScreen extends StatefulWidget {
   const SendMoneySuccessScreen({super.key});
- 
+
   @override
   State<SendMoneySuccessScreen> createState() => _SendMoneySuccessScreenState();
 }
@@ -40,7 +40,7 @@ class _SendMoneySuccessScreenState extends State<SendMoneySuccessScreen> {
   String currency = "";
   String fullname = "";
   String isicNum = "";
-  String ? idTrans;
+  String? idTrans;
   final InActivityTimer timer = InActivityTimer();
   @override
   void initState() {
@@ -59,38 +59,42 @@ class _SendMoneySuccessScreenState extends State<SendMoneySuccessScreen> {
       setState(() {
         isLoading = true;
       });
-      SendMoneysubmitResponseModal modal = SendMoneysubmitResponseModal.fromJson(jsonDecode(data.responseJson));
+      SendMoneysubmitResponseModal modal =
+          SendMoneysubmitResponseModal.fromJson(jsonDecode(data.responseJson));
       if (modal.status == "success") {
         if (modal.data != null) {
           setState(() {
-
-            sendmoney = modal.data!.sendMoney; 
-                getIdTrans();
+            sendmoney = modal.data!.sendMoney;
+            getIdTrans();
             isLoading = false;
           });
-          String date = DateConverter.localNumberdateOnly(modal.data?.sendMoney?.createdAt.toString() ?? "");
-          String time = DateConverter.localTimeOnly(modal.data?.sendMoney?.createdAt.toString() ?? "");
+          String date = DateConverter.localNumberdateOnly(
+              modal.data?.sendMoney?.createdAt.toString() ?? "");
+          String time = DateConverter.localTimeOnly(
+              modal.data?.sendMoney?.createdAt.toString() ?? "");
           AppDialog().successDialog(
-            details:  { 
+            text: MyStrings.sendMoney.tr,
+            details: {
               'senderName': fullname,
               'senderISIC': isicNum,
-              'recipientName': '${ sendmoney?.receiverUser?.firstname ?? ""} ${ sendmoney?.receiverUser?.lastname ?? ""}',
-              'recipientISIC': '${ sendmoney?.receiverUser?.isicNum ?? ""}',
-              'amount': '$currency${StringConverter.formatNumber(sendmoney?.amount.toString() ?? "")}',
+              'recipientName':
+                  '${sendmoney?.receiverUser?.firstname ?? ""} ${sendmoney?.receiverUser?.lastname ?? ""}',
+              'recipientISIC': '${sendmoney?.receiverUser?.isicNum ?? ""}',
+              'amount': 'tk${sendmoney?.amount.toString() ?? ""}',
               'date': '${date} ${time}',
-              },
+            },
             context,
             willPop: false,
             onTap: () {},
             title: MyStrings.sendMoney,
             cashDetails: NotificationListener<ScrollNotification>(
-            onNotification: (_) {
-          timer.handleUserInteraction(context);
-          return false;
-        },
+              onNotification: (_) {
+                timer.handleUserInteraction(context);
+                return false;
+              },
               child: GestureDetector(
-             onTap: () => timer.handleUserInteraction(context),
-             onPanUpdate: (_) => timer.handleUserInteraction(context),
+                onTap: () => timer.handleUserInteraction(context),
+                onPanUpdate: (_) => timer.handleUserInteraction(context),
                 child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -109,7 +113,8 @@ class _SendMoneySuccessScreenState extends State<SendMoneySuccessScreen> {
                                 firstTitle: MyStrings.time.tr,
                                 secondTitle: MyStrings.referenceID.tr,
                                 total: "$time $date",
-                                newBalance: "#${sendmoney?.trx.toString() ?? ""}",
+                                newBalance:
+                                    "#${sendmoney?.trx.toString() ?? ""}",
                                 totalStyle: semiBoldDefault.copyWith(
                                   fontWeight: FontWeight.w500,
                                   color: MyColor.getTextColor(),
@@ -124,8 +129,9 @@ class _SendMoneySuccessScreenState extends State<SendMoneySuccessScreen> {
                                 needBorder: false,
                                 firstTitle: MyStrings.total.tr,
                                 secondTitle: MyStrings.newBalance.tr,
-                                total: "$currency${StringConverter.formatNumber(sendmoney?.amount.toString() ?? "")}",
-                                newBalance: "$currency${StringConverter.formatNumber(sendmoney?.postBalance ?? "")}",
+                                total:
+                                    "tk${sendmoney?.nombreTicket.toString()}",
+                                newBalance: "tk${sendmoney?.postBalance ?? ""}",
                                 space: 10,
                               ),
                             ),
@@ -138,8 +144,12 @@ class _SendMoneySuccessScreenState extends State<SendMoneySuccessScreen> {
                             alignment: Alignment.topRight,
                             child: GestureDetector(
                               onTap: () {
-                                Clipboard.setData(ClipboardData(text: sendmoney?.trx.toString() ?? "")).then((value) {
-                                  CustomSnackBar.success(successList: [MyStrings.successfullyCopied.tr]);
+                                Clipboard.setData(ClipboardData(
+                                        text: sendmoney?.trx.toString() ?? ""))
+                                    .then((value) {
+                                  CustomSnackBar.success(successList: [
+                                    MyStrings.successfullyCopied.tr
+                                  ]);
                                 });
                               },
                               child: const CustomSvgPicture(image: MyIcon.copy),
@@ -151,7 +161,8 @@ class _SendMoneySuccessScreenState extends State<SendMoneySuccessScreen> {
               ),
             ),
             userDetails: UserCard(
-              title:"${sendmoney?.receiverUser?.firstname.toString() ?? ""} ${sendmoney?.receiverUser?.lastname.toString() ?? "" }",
+              title:
+                  "${sendmoney?.receiverUser?.firstname.toString() ?? ""} ${sendmoney?.receiverUser?.lastname.toString() ?? ""}",
               subtitle: sendmoney?.receiverUser?.mobile.toString() ?? "",
             ),
           );
@@ -160,19 +171,22 @@ class _SendMoneySuccessScreenState extends State<SendMoneySuccessScreen> {
     });
   }
 
-  void getIdTrans() async{
-   SharedPreferences prefs = await SharedPreferences.getInstance();
-   idTrans = prefs.getString('idTrans');
-   if(idTrans != null){
-     bool? statusFeeIncluded = await MyUtils().loadFeeIncludedStatus();
-    double? amount = double.tryParse(sendmoney?.amount.toString() ?? '0'); 
-                   print("amount =====================: $amount"); 
-    double  ?charge = double.tryParse(sendmoney?.charge.toString() ?? '0');
-       print("charge =====================: $charge"); 
-    double newAmount = amount! - charge!; 
-               print("newAmount =====================: $newAmount"); 
-      MyUtils().recordTransaction("Messae de succès", "Vous venez de recevoir une somme de ${newAmount.toString()} de la part de $fullname  ",true, "$idTrans",newAmount );
-}
+  void getIdTrans() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    idTrans = prefs.getString('idTrans');
+    if (idTrans != null) {
+      double amount =
+          double.tryParse(sendmoney?.nombreTicket.toString() ?? '0') ?? 0;
+      int tickets = amount.toInt();
+
+      MyUtils().recordTransaction(
+        "Message de succès",
+        "Vous venez de recevoir $tickets ticket(s) de la part de $fullname",
+        true,
+        "$idTrans",
+        amount,
+      );
+    }
   }
 
   @override
@@ -184,13 +198,13 @@ class _SendMoneySuccessScreenState extends State<SendMoneySuccessScreen> {
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
-            onNotification: (_) {
-          timer.handleUserInteraction(context);
-          return false;
-        },
+      onNotification: (_) {
+        timer.handleUserInteraction(context);
+        return false;
+      },
       child: GestureDetector(
-             onTap: () => timer.handleUserInteraction(context),
-             onPanUpdate: (_) => timer.handleUserInteraction(context),
+        onTap: () => timer.handleUserInteraction(context),
+        onPanUpdate: (_) => timer.handleUserInteraction(context),
         child: WillPopWidget(
           nextRoute: RouteHelper.bottomNavBar,
           child: Scaffold(
