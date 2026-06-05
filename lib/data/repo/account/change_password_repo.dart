@@ -17,27 +17,34 @@ class ChangePasswordRepo {
 
   Future<bool> changePassword(String currentPass, String password) async {
     final params = modelToMap(currentPass, password);
-    String url = '${UrlContainer.baseUrl}${UrlContainer.changePasswordEndPoint}';
+    String url =
+        '${UrlContainer.baseUrl}${UrlContainer.changePasswordEndPoint}';
 
-    ResponseModel responseModel = await apiClient.request(url, Method.postMethod, params, passHeader: true);
+    ResponseModel responseModel = await apiClient
+        .request(url, Method.postMethod, params, passHeader: true);
     if (responseModel.statusCode == 200) {
-      AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(jsonDecode(responseModel.responseJson));
-      if (model.message?.success != null && model.message!.success!.isNotEmpty) {
-        CustomSnackBar.success(successList: model.message?.success ?? [MyStrings.pin.tr]);
-
+      AuthorizationResponseModel model = AuthorizationResponseModel.fromJson(
+          jsonDecode(responseModel.responseJson));
+      if (model.message?.success != null &&
+          model.message!.success!.isNotEmpty) {
+        // ← supprimer CustomSnackBar.success ici
         return true;
       } else {
-        CustomSnackBar.error(errorList: model.message?.error ?? [MyStrings.requestFail.tr]);
+        CustomSnackBar.error(
+            errorList: model.message?.error ?? [MyStrings.requestFail.tr]);
         return false;
       }
     } else {
-      //handle error
       return false;
     }
   }
 
   modelToMap(String currentPassword, String newPass) {
-    Map<String, dynamic> map2 = {'current_password': currentPassword, 'password': newPass, 'password_confirmation': newPass};
+    Map<String, dynamic> map2 = {
+      'current_password': currentPassword,
+      'password': newPass,
+      'password_confirmation': newPass
+    };
     return map2;
   }
 }
